@@ -1,0 +1,40 @@
+
+#logo {
+  width: 35%;
+  height: auto;
+}
+
+.navbar-brand {
+  font-family: 'Draconian';
+  font-size: 3em;
+}
+/* @media all and (min-width: 1280px) {
+  .navbar-brand {
+    font-size:  3vw;
+  }
+}
+@media all  and (min-width: 992px) and (max-width: 1279px) {
+  .navbar-brand {
+    font-size:  3vw;
+  }
+}
+
+@media all  and (min-width: 360px) and (max-width: 412px) {
+  .navbar-brand {
+    font-size:  5vw;
+  }
+}
+@media all  and (min-width: 413px) and (max-width: 991px) {
+  .navbar-brand {
+    font-size:  5vw;
+  }
+} */
+
+.center {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+ul{
+  font-size: 1.2em;
+}

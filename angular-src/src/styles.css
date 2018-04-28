@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+@import '../node_modules/font-awesome/css/font-awesome.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import "../node_modules/bootswatch/dist/cosmo/bootstrap.css";
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+body {
+  font-style: 'Roboto', sans-serif;
+}
+
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
