@@ -12,7 +12,10 @@ const mongoose = require('mongoose');
 const app = express();
 
 //API file for routes
-const users = require('./routes/users');
+const users = require('./api/routes/userRoutes');
+const camere = require('./api/routes/cameraRoutes');
+const rezervari = require('./api/routes/rezervareRoutes');
+// const villas = require('./api/routes/villaRoutes');
 
 // Port number
 const port = 3000;
@@ -29,9 +32,13 @@ app.use(cors()); // matches the port 3000 of server and port 4200 of the client
 app.use(bodyParser.json());
 
 app.use('/users', users);
+app.use('/camere', camere);
+app.use('/rezervari', rezervari);
+// app.use('/ville', ville);
+
 
 // Set Static Angular output folder
-app.use(express.static(path.join(__dirname, 'public'))); // __dirname == path.dirname(__filename) - the directory name of the current file
+app.use(express.static(path.join(__dirname, 'public'))); //  the directory name of the current file
 
 //Passport Middleware- get the token system working to protect certain  routes
 app.use(passport.initialize());
@@ -42,8 +49,8 @@ app.get('/', function(req, res) {
   res.send('Invalid Endpoint');
 });
 
-app.get('*',(req,res)=>{
-  res.sendFile(path.join(__dirname,'public/index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 //DATABASE

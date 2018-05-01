@@ -1,0 +1,134 @@
+'use strict';
+
+const config = require('../../config/database');
+const express = require('express');
+const router = express.Router();
+const Camera = require('../controllers/cameraController'); // bring in the controller
+const CameraSchema = require('../models/cameraModel');
+
+
+// (1) http://localhost:3000/camere/new
+//
+router.post('/new', function(req, res) {
+  let cameraNoua = new CameraSchema({
+    nume: req.body.nume,
+    capacitate: req.body.capacitate,
+    liber: req.body.liber,
+    // villa: req.body.villa,
+    pret: req.body.pret,
+    descriere: req.body.descriere
+    // rezervari: req.body.rezervari,
+  });
+
+  let responseSchema = {
+    data: Object,
+    isError: Boolean,
+    statusText: String,
+    errorType: {
+      wrongAccessRights: Boolean
+    }
+  };
+
+  cameraNoua.save(function(err, doc) {
+    if (err) {
+      console.log('/cameraNoua | POST | Error was occurred');
+      responseSchema.data = undefined;
+      responseSchema.isError = true;
+      responseSchema.statusText = err.errmsg || 'internal server error';
+      responseSchema.errorType = undefined;
+    } else if (doc) {
+      responseSchema.data = {
+        _id: doc._id
+      };
+      responseSchema.isError = false;
+      responseSchema.statusText = 'New room was successfully created';
+      responseSchema.errorType = undefined;
+    }
+    res.status(200).send(responseSchema);
+  });
+});
+
+
+// (2) http://localhost:3000/camere/show
+//
+router.get('/show', (request, response) => {
+  CameraSchema.find((err, docs) => {
+    if (err) {
+      console.log('/show | GET | Error was occurred');
+      response.send(err.errmsg);
+    }
+    if (docs)
+      response.send(docs);
+  });
+});
+
+
+// (3) http://localhost:3000/camere/show/:id
+//
+router.get('/show/:id', (request, response) => {
+  let id = request.params.id;
+  CameraSchema.findOne({
+    _id: id
+  }, (err, doc) => {
+    if (err) {
+      console.log('/show/:id | GET | Error was occurred');
+      console.log(err.errmsg);
+      response.send(err.errmsg);
+    } else
+      response.send(doc);
+  });
+});
+
+
+// (4) http://localhost:3000/camere/update/:id
+//
+router.put('/update/:id', (req, res) => {
+  let id = req.params.id;
+  let cameraData = req.body;
+  CameraSchema.update({
+    _id: id
+  }, cameraData, (err) => {
+    if (err) {
+      console.log('/update/:id | PUT | Error was occurred');
+      console.log(err.errmsg);
+      response.send(err.errmsg);
+    } else
+      res.send("Camera " + id + " successfully updated!");
+  });
+});
+
+
+// (5) http://localhost:3000/camere/delete/:id
+//
+router.delete('/delete/:id', (request, response) => {
+		let id = request.params.id;
+
+		let responseSchema = {
+			data: Object,
+			isError: Boolean,
+			statusText: String,
+			errorType: {
+				wrongAccessRights: Boolean
+			}
+		}
+
+		CameraSchema.remove({ _id: id }, (err, doc) => {
+			if (err) {
+				console.log('/delete/:id | DELETE | Error was occurred');
+				responseSchema.data = undefined;
+				responseSchema.isError = true;
+				responseSchema.statusText = err.errmsg || 'internal server error';
+				responseSchema.errorType = undefined;
+				response.status(200).send(responseSchema);
+			} else if (doc) {
+				responseSchema.data = {_id: id};
+				responseSchema.isError = false;
+				responseSchema.statusText = 'Room was removed';
+				responseSchema.errorType = undefined;
+				response.status(200).send(responseSchema);
+			}
+		});
+	});
+
+
+module.exports = router;
