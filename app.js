@@ -15,7 +15,7 @@ const app = express();
 const users = require('./api/routes/userRoutes');
 const camere = require('./api/routes/cameraRoutes');
 const rezervari = require('./api/routes/rezervareRoutes');
-// const villas = require('./api/routes/villaRoutes');
+const ville = require('./api/routes/villaRoutes');
 
 // Port number
 const port = 3000;
@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 app.use('/users', users);
 app.use('/camere', camere);
 app.use('/rezervari', rezervari);
-// app.use('/ville', ville);
+app.use('/ville', ville);
 
 
 // Set Static Angular output folder

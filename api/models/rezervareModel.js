@@ -1,42 +1,47 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema();
 const relationship = require("mongoose-relationship");
 const path = require('path');
 const Camera = require('./cameraModel');
 const User = require('./userModel');
 
 
-const RezervareSchema = new Schema({
+const RezervareSchema = mongoose.Schema({
   dataDePlata: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    requiered: true
   },
   dataCheckIn: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    requiered: true
   },
-  dataCheckOut: Date,
-  statut: {
-    type: Number,
-    default: 1
+  dataCheckOut: {
+    type: Date,
+    requiered: true
   },
-  pretTotal: Number,
+  // statut: {
+  //   type: Number,
+  //   default: 1
+  // },
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    childPath: "user"
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   camera: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Camera',
-    childPath: "camere"
+    requiered: true
+  },
+  pretTotal: {
+    type: Number,
   }
 });
 
-// ReservationSchema.plugin(relationship, {
-//   relationshipPathName: 'rezervare'
-// });
+
+// ReservationSchema.plugin(relationship, { relationshipPathName: ['user', 'camera'] });
 
 module.exports = mongoose.model('Rezervare', RezervareSchema);

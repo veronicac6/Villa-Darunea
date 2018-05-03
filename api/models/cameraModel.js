@@ -1,42 +1,49 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+//const Schema = mongoose.Schema;
 const config = require('../../config/database');
 const relationship = require('mongoose-relationship');
 const path = require('path');
-const Reservation = require('./rezervareModel');
+const Rezervare = require('./rezervareModel');
 const Villa = require('./villaModel');
 
 
-const CameraSchema = new Schema({
-  nume: String,
+const CameraSchema = mongoose.Schema({
+  nume: {
+    type: String,
+    requiered: true
+  },
   capacitate: {
     type: Number,
-    min: 0
+    min: 0,
+    requiered: true
   },
-  liber: {
-    type: Number,//0- fals sau 1- adevarat
-    min: 0
-  },
+  // liber: {
+  //   type: Number, //0- fals sau 1- adevarat
+  //   dafault: 1
+  // },
   villa: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Villa',
-    childPath: 'camere'
+    requiered: true
   },
   pret: {
     type: Number,
-    min: 0
+    min: 0,
+    requiered: true
   },
-  descriere: {type: String},
-  rezervari: [{ //tablou
+  descriere: {
+    type: String
+  },
+  rezervari: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Rezervare'
   }]
 });
 
 // CameraSchema.plugin(relationship, {
-//   relationshipPathName: ['villa', 'rezervare']
+//   relationshipPathName: 'villa'
 // });
 
 module.exports = mongoose.model('Camera', CameraSchema);

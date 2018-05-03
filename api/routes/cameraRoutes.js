@@ -10,11 +10,12 @@ const CameraSchema = require('../models/cameraModel');
 // (1) http://localhost:3000/camere/new
 //
 router.post('/new', function(req, res) {
+
   let cameraNoua = new CameraSchema({
     nume: req.body.nume,
     capacitate: req.body.capacitate,
-    liber: req.body.liber,
-    // villa: req.body.villa,
+    // liber: req.body.liber,
+    villa: req.body.villa,
     pret: req.body.pret,
     descriere: req.body.descriere
     // rezervari: req.body.rezervari,
@@ -31,7 +32,7 @@ router.post('/new', function(req, res) {
 
   cameraNoua.save(function(err, doc) {
     if (err) {
-      console.log('/cameraNoua | POST | Error was occurred');
+      console.log('/new | POST | Error was occurred');
       responseSchema.data = undefined;
       responseSchema.isError = true;
       responseSchema.statusText = err.errmsg || 'internal server error';
@@ -49,7 +50,7 @@ router.post('/new', function(req, res) {
 });
 
 
-// (2) http://localhost:3000/camere/show
+// (2) http://localhost:3000/ville/show
 //
 router.get('/show', (request, response) => {
   CameraSchema.find((err, docs) => {
@@ -63,7 +64,7 @@ router.get('/show', (request, response) => {
 });
 
 
-// (3) http://localhost:3000/camere/show/:id
+// (3) http://localhost:3000/ville/show/:id
 //
 router.get('/show/:id', (request, response) => {
   let id = request.params.id;
@@ -80,7 +81,7 @@ router.get('/show/:id', (request, response) => {
 });
 
 
-// (4) http://localhost:3000/camere/update/:id
+// (4) http://localhost:3000/ville/update/:id
 //
 router.put('/update/:id', (req, res) => {
   let id = req.params.id;
@@ -98,7 +99,7 @@ router.put('/update/:id', (req, res) => {
 });
 
 
-// (5) http://localhost:3000/camere/delete/:id
+// (5) http://localhost:3000/ville/delete/:id
 //
 router.delete('/delete/:id', (request, response) => {
 		let id = request.params.id;
