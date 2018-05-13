@@ -1,6 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const User = require('../api/models/userModel');
+const User = require('../api/controllers/userController');
 const config = require('./database');
 
 module.exports = function(passport) {

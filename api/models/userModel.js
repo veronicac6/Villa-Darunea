@@ -21,4 +21,4 @@ const UserSchema = mongoose.Schema({
 });
 
 // Using the User model from outside
-const User = (module.exports = mongoose.model('User', UserSchema));
+module.exports = mongoose.model('User', UserSchema);

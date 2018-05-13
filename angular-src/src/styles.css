@@ -1,16 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 @import '../node_modules/font-awesome/css/font-awesome.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import "../node_modules/bootswatch/dist/cosmo/bootstrap.css";
+/* @import './assets/fonts/Palanquindark/palanquindark'; */
 
 .selector-for-some-widget {
   box-sizing: content-box;
 }
 
-body {
-  font-style: 'Roboto', sans-serif;
+body,h1,h2,h3,h4,h5,h6,p,a {
+  font-family: 'Palanquindark', sans-serif  !important;
 }
 
 #loading {

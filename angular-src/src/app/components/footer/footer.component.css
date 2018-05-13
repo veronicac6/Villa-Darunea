@@ -4,6 +4,12 @@
   margin: 0;
 }
 
+i {
+  vertical-align: middle;
+  /* //padding: 40px 45px 40px 35px; */
+  line-height: 35px !important;
+}
+
 header {
   text-align: center;
   padding-top: 100px;
@@ -119,7 +125,7 @@ footer {
 
 .footer-distributed h3 {
   color: #ffffff;
-  font: normal 25px 'Draconian';
+  font: normal 25px 'Draconian' !important;
   margin: 0;
 }
 

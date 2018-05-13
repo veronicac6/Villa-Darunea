@@ -7,7 +7,6 @@ const path = require('path'); // system module
 const passport = require('passport');
 const mongoose = require('mongoose');
 
-
 // Initializing the app (server) variable with express
 const app = express();
 
@@ -16,6 +15,7 @@ const users = require('./api/routes/userRoutes');
 const camere = require('./api/routes/cameraRoutes');
 const rezervari = require('./api/routes/rezervareRoutes');
 const ville = require('./api/routes/villaRoutes');
+const imagini = require('./api/routes/imagineRoutes');
 
 // Port number
 const port = 3000;
@@ -35,6 +35,7 @@ app.use('/users', users);
 app.use('/camere', camere);
 app.use('/rezervari', rezervari);
 app.use('/ville', ville);
+app.use('/imagini', imagini);
 
 
 // Set Static Angular output folder

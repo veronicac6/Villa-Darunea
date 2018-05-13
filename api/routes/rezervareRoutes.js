@@ -17,7 +17,7 @@ router.post('/new', function(req, res) {
     dataCheckOut: req.body.dataCheckOut,
     // statut: req.body.statut,
     camera: req.body.camera
-    pretTotal: (req.body.dataCheckIn-req.body.dataCheckOut)*req.body.camera
+  //  pretTotal: (req.body.dataCheckIn-req.body.dataCheckOut)*req.body.camera
     //user: req.body.user,
   });
 
