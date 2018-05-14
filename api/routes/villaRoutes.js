@@ -13,7 +13,8 @@ const VillaSchema = require('../models/villaModel');
 router.post('/new', function(req, res) {
 
   let villaNoua = new VillaSchema({
-    denumire: req.body.denumire
+    denumire: req.body.denumire,
+    camere:req.body.camere
   });
 
   villaNoua.save(function(err, doc) {

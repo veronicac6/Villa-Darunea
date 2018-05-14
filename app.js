@@ -15,7 +15,7 @@ const users = require('./api/routes/userRoutes');
 const camere = require('./api/routes/cameraRoutes');
 const rezervari = require('./api/routes/rezervareRoutes');
 const ville = require('./api/routes/villaRoutes');
-const imagini = require('./api/routes/imagineRoutes');
+const clienti=require('./api/routes/clientiRoutes');
 
 // Port number
 const port = 3000;
@@ -35,8 +35,7 @@ app.use('/users', users);
 app.use('/camere', camere);
 app.use('/rezervari', rezervari);
 app.use('/ville', ville);
-app.use('/imagini', imagini);
-
+app.use('/clienti',clienti);
 
 // Set Static Angular output folder
 app.use(express.static(path.join(__dirname, 'public'))); //  the directory name of the current file

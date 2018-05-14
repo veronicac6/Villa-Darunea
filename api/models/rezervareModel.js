@@ -9,7 +9,21 @@ const User = require('./userModel');
 
 
 const RezervareSchema = mongoose.Schema({
-  dataDePlata: {
+  client: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Client',
+    requiered: true
+  },
+  camera: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Camera',
+    requiered: true
+  },
+  nrPersoane: {
+    type: Number,
+    requiered: true
+  },
+  dataCreare: {
     type: Date,
     default: Date.now,
     requiered: true
@@ -23,21 +37,9 @@ const RezervareSchema = mongoose.Schema({
     type: Date,
     requiered: true
   },
-  // statut: {
-  //   type: Number,
-  //   default: 1
-  // },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  camera: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Camera',
-    requiered: true
-  },
   pretTotal: {
     type: Number,
+    requiered: true
   }
 });
 

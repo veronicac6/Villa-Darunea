@@ -10,7 +10,7 @@ const Villa = require('./villaModel');
 
 
 const CameraSchema = mongoose.Schema({
-  nume: {
+  denunumire: {
     type: String,
     requiered: true
   },
@@ -32,9 +32,6 @@ const CameraSchema = mongoose.Schema({
     type: Number,
     min: 0,
     requiered: true
-  },
-  descriere: {
-    type: String
   },
   rezervari: [{
     type: mongoose.Schema.Types.ObjectId,

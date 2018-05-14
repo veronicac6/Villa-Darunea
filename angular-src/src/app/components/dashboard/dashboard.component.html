@@ -2,6 +2,29 @@
 <h2 class="page-header">Dashboard</h2>
 <p>Welcome to your dashboard!</p>
 
+<app-book>
+  <div id='calendar'></div>
+
+
+  <script>
+  $(function() {
+
+    $('#calendar').fullCalendar({
+      defaultView: 'timelineDay',
+      header: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'timelineDay,timelineWeek,timelineMonth'
+      },
+      resourceLabelText: 'Rooms',
+      resources: 'https://fullcalendar.io/demo-resources.json',
+      events: 'https://fullcalendar.io/demo-events.json?with-resources'
+    });
+
+  });
+  </script>
+</app-book>
+
 <!-- <h1>Image upload</h1>
 <input type="file" (change)="onFileSelected($event)" name="" value="">
 <button type="button" (click)="onUpload()">Upload</button> -->

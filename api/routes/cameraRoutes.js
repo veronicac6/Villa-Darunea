@@ -3,7 +3,6 @@
 const config = require('../../config/database');
 const express = require('express');
 const router = express.Router();
-const Camera = require('../controllers/cameraController'); // bring in the controller
 const CameraSchema = require('../models/cameraModel');
 
 
@@ -12,13 +11,11 @@ const CameraSchema = require('../models/cameraModel');
 router.post('/new', function(req, res) {
 
   let cameraNoua = new CameraSchema({
-    nume: req.body.nume,
+    denimire: req.body.nume,
     capacitate: req.body.capacitate,
-    // liber: req.body.liber,
     villa: req.body.villa,
     pret: req.body.pret,
-    descriere: req.body.descriere
-    // rezervari: req.body.rezervari,
+    rezervari: req.body.rezervari,
   });
 
   let responseSchema = {

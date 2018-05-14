@@ -1,3 +1,20 @@
-<p>
-  book works!
-</p>
+<div id='calendar'></div>
+
+
+<script>
+$(function() {
+
+  $('#calendar').fullCalendar({
+    defaultView: 'timelineDay',
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'timelineDay,timelineWeek,timelineMonth'
+    },
+    resourceLabelText: 'Rooms',
+    resources: 'https://fullcalendar.io/demo-resources.json',
+    events: 'https://fullcalendar.io/demo-events.json?with-resources'
+  });
+
+});
+</script>

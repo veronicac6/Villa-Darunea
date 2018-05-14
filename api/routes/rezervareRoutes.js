@@ -3,7 +3,6 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../../config/database');
-const Rezervare = require('../controllers/rezervareController'); // bring in the model
 const RezervareSchema = require('../models/rezervareModel');
 
 
@@ -12,13 +11,13 @@ const RezervareSchema = require('../models/rezervareModel');
 router.post('/new', function(req, res) {
 
   let rezervareNoua = new RezervareSchema({
-    dataDePlata: req.body.dataDePlata,
+    client: req.body.client,
+    camera: req.body.camera,
+    nrPersoane: req.body.nrPersoane,
+    dataCreare: req.body.dataDePlata,
     dataCheckIn: req.body.dataCheckIn,
     dataCheckOut: req.body.dataCheckOut,
-    // statut: req.body.statut,
-    camera: req.body.camera
-  //  pretTotal: (req.body.dataCheckIn-req.body.dataCheckOut)*req.body.camera
-    //user: req.body.user,
+    pretTotal: req.body.pretTotal
   });
 
   rezervareNoua.save(function(err, doc) {
