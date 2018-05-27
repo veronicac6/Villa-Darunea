@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { Ng2CarouselamosModule } from 'ng2-carouselamos'
+import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from './services/user.service';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { ClientService } from './services/client.service';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
@@ -30,15 +31,15 @@ import { RegisterComponent } from './components/register/register.component';
 import { ResortComponent } from './components/resort/resort.component';
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { ImageComponent } from './components/image/image.component';
-import { BookComponent } from './components/book/book.component';
+import { BookingComponent } from './components/booking/booking.component';
+import { ClientListComponent } from './components/client-list/client-list.component';
 
 
 
 //Array of routes
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'book', component: BookComponent },
+  { path: 'booking', component: BookingComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   { path: 'gallery', component: GalleryComponent },
   { path: 'home', component: HomeComponent },
@@ -69,8 +70,8 @@ const appRoutes: Routes = [
     RoomsComponent,
     ProfileComponent,
     NotfoundComponent,
-    ImageComponent,
-    BookComponent
+    BookingComponent,
+    ClientListComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +85,7 @@ const appRoutes: Routes = [
     FlashMessagesModule.forRoot(),
     AgmCoreModule.forRoot({apiKey:'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs'})
   ],
-  providers: [UserService, ValidateService, AuthService, AuthGuard],
+  providers: [UserService, ValidateService, AuthService, AuthGuard, ClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

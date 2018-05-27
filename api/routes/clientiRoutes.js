@@ -1,8 +1,6 @@
-'use strict';
-
+const config = require('../../config/database');
 const express = require('express');
 const router = express.Router();
-const config = require('../../config/database');
 const ClientSchema = require('../models/clientModel');
 
 
@@ -31,16 +29,16 @@ router.post('/new', (req, res) => {
   });
 });
 
-//(2) http://localhost/clienti/show
+//(2) http://localhost:3000/clienti/show
 //
-router.get('/show', (req, res) => {
+router.get('/show', (req, res,next) => {
   ClientSchema.find((err, docs) => {
     if (err) {
       console.log('/show | GET | Error was occurred');
       res.send(err.errmsg);
     }
     if (docs)
-      res.send(docs);
+    res.json(docs);
   });
 });
 

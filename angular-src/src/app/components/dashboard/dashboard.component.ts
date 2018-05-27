@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from '../../services/user.service';
-
+// import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,23 +9,10 @@ import { UserService } from '../../services/user.service';
 })
 export class DashboardComponent implements OnInit {
 
-//  selectedFile:File = null;
+  clienti: any;
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+
+    }
   }
-  constructor() { } //private user: UserService, private http: HttpClient
-
-  
-  // onFileSelected(event) {
-  //   this.selectedFile = <File>event.target.files[0];
-  // }
-
-  // onUpload() {
-  //   const fd = new FormData();
-  //   fd.append('image', this.selectedFile, this.selectedFile.name);
-  //   this.http.post('http://localhost:3000/imagini/upload', fd)
-  //     .subscribe(res => {
-  //       console.log(res);
-  //     });
-  // }
-}

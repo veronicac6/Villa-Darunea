@@ -1,30 +1,76 @@
-
+<div class="container">
 <h2 class="page-header">Dashboard</h2>
 <p>Welcome to your dashboard!</p>
 
-<app-book>
-  <div id='calendar'></div>
+
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-light btn-lg btn-block" data-toggle="collapse" data-target="#collapseClients" aria-expanded="true" aria-controls="collapseClients">
+          Clients
+        </button>
+      </h5>
+    </div>
+    <div class="collapse" id="collapseClients">
+      <div class="card card-body">
+        <app-client-list></app-client-list>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-light btn-lg btn-block" data-toggle="collapse" data-target="#collapseRooms" aria-expanded="true" aria-controls="collapseRooms">
+          Rooms
+        </button>
+      </h5>
+    </div>
+    <div class="collapse" id="collapseRooms">
+      <div class="card card-body">
+        <app-client-list></app-client-list>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-light btn-lg btn-block" data-toggle="collapse" data-target="#collapseReservations" aria-expanded="true" aria-controls="collapseReservations">
+          Reservations
+        </button>
+      </h5>
+    </div>
+    <div class="collapse" id="collapseReservations">
+      <div class="card card-body">
+        <app-client-list></app-client-list>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 
-  <script>
-  $(function() {
-
-    $('#calendar').fullCalendar({
-      defaultView: 'timelineDay',
-      header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'timelineDay,timelineWeek,timelineMonth'
-      },
-      resourceLabelText: 'Rooms',
-      resources: 'https://fullcalendar.io/demo-resources.json',
-      events: 'https://fullcalendar.io/demo-events.json?with-resources'
-    });
-
-  });
-  </script>
-</app-book>
-
-<!-- <h1>Image upload</h1>
-<input type="file" (change)="onFileSelected($event)" name="" value="">
-<button type="button" (click)="onUpload()">Upload</button> -->
+<!-- <div class="row">
+  <div class="col-md-5">
+    <h2>Contacts</h2>
+    <ul class="list-group">
+      <li class="list-group-item"
+        *ngFor="let client of clienti"
+        (click)="selectClient(client)"
+        [class.active]="client === selectedClient">
+        {{contact.name}}
+      </li>
+    </ul>
+    <button class="btn btn-warning" (click)="createNewClient()">New</button>
+  </div>
+  <div class="col-md-5 col-md-offset-2">
+    <div
+      [client]="selectedClient"
+      [createHandler]="addClient"
+      [updateHandler]="updateClient"
+      [deleteHandler]="deleteClient">
+    </div>
+  </div>
+</div> -->

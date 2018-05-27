@@ -16,7 +16,7 @@ longitude= 30.080824;
 
   }
   onClick(){
-    this.router.navigate(['book']);
+    this.router.navigate(['booking']);
   }
 
 
