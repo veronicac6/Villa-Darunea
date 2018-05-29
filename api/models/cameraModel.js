@@ -10,7 +10,7 @@ const Villa = require('./villaModel');
 
 
 const CameraSchema = mongoose.Schema({
-  denunumire: {
+  denumire: {
     type: String,
     requiered: true
   },

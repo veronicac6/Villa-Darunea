@@ -15,6 +15,7 @@ import { UserService } from './services/user.service';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { ClientService } from './services/client.service';
+import{ReservationService} from './services/reservation.service';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
@@ -85,7 +86,7 @@ const appRoutes: Routes = [
     FlashMessagesModule.forRoot(),
     AgmCoreModule.forRoot({apiKey:'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs'})
   ],
-  providers: [UserService, ValidateService, AuthService, AuthGuard, ClientService],
+  providers: [UserService, ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

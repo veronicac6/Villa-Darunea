@@ -1,20 +1,84 @@
 <div class="container">
-  <h1>Clients List</h1>
+  <h2>Clients List</h2>
+  <div class="container">
+    <button class="btn btn-info btn-sm" (click)="show=!show"><b>Add client</b></button>
+  </div>
+  <div class="container" *ngIf="show">
+
+    <form method="post" action="" class="form-horizontal">
+
+      <h5>Client</h5>
+
+      <div class="form-group">
+        <label class="col-xs-3"  for="name">Name</label>
+        <input type="text" class="form-control" id="name">
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-3" for="surname">Surname</label>
+        <input type="text" class="form-control" id="surname">
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-3" for="email">Email</label>
+        <input type="email" class="form-control" id="email">
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-3" for="contact">Contact number</label>
+        <input type="text" class="form-control" id="contact">
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-3" for="reservation">
+          <input type="checkbox" (click)="showValue()"> Reservation
+        </label>
+      </div>
+
+
+      <div class="form-group" *ngIf="checked">
+        <h5>Reservation</h5>
+
+          <div class="selectContainer">
+        <select  class="form-control " id="">
+          <option value="">Choose reservation</option>
+          <option  *ngFor="let reservation of reservations">{{reservation.camera}}, {{reservation.nrPersoane}}</option>
+
+        </select>
+      </div>
+    </div>
+
+      <div class="form-group">
+        <button class="btn btn-dafault" type="submit">ADD CLIENT</button>
+      </div>
+
+
+    </form>
+  </div>
+  <div class="container">
+  </div>
   <table class="table">
     <thead>
       <tr>
-        <th>nume</th>
-        <th>prenume</th>
-        <th>email</th>
-        <th>telefon</th>
-        <th>rezervare</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Contact number</th>
+        <th>Reservation</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let client of clients">
         <td>{{ client.nume }}</td>
         <td>{{ client.prenume }}</td>
-        <td>Show Detail</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.telefon }}</td>
+        <td *ngIf="client.rezervare">{{ client.rezervare}}</td>
+        <td *ngIf="!client.rezervare">-</td>
+        <td>
+          <button class=" btn btn-success" (click)="editClient()">Edit</button>
+          <button class="btn btn-danger" (click)="deleteClient()">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

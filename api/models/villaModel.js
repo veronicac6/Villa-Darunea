@@ -1,19 +1,17 @@
-
+'use strict';
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const relationship = require("mongoose-relationship");
-const path = require('path');
+// const relationship = require("mongoose-relationship");
+// const path = require('path');
 const Camera = require('./cameraModel');
 
-
-const VillaSchema = new Schema({
+const VillaSchema =  mongoose.Schema({
   denumire: {
     type: String,
     requiered: true
   },
   camere: [{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Camera'
   }]
 });

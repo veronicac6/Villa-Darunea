@@ -94,7 +94,7 @@ router.put('/update/:id', (req, res) => {
     if (err) {
       console.log('/update/:id | PUT | Error was occurred');
       console.log(err.errmsg);
-      response.send(err.errmsg);
+      res.send(err.errmsg);
     } else
       res.send("Villa " + id + " successfully updated!");
   });

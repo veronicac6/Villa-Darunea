@@ -1,8 +1,8 @@
  'use strict';
 
 const mongoose = require('mongoose');
-const relationship = require("mongoose-relationship");
-const path = require('path');
+// const relationship = require("mongoose-relationship");
+// const path = require('path');
 const Rezervare = require('./rezervareModel');
 
 const ClientSchema = mongoose.Schema({
@@ -19,13 +19,13 @@ const ClientSchema = mongoose.Schema({
     requiered: true
   },
   telefon: {
-    type: Number,
+    type: String,
     requiered: true
   },
   rezervare: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Rezervare'
   }
-})
+});
 
 module.exports = mongoose.model('Client', ClientSchema);

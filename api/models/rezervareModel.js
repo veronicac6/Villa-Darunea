@@ -18,7 +18,7 @@ const RezervareSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Camera',
     requiered: true
-  },
+      },
   nrPersoane: {
     type: Number,
     requiered: true
