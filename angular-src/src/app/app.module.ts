@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
@@ -10,6 +10,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
 import {AgmCoreModule} from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { EditableTableModule } from 'ng-editable-table/editable-table/editable-table.module';
 
 import { UserService } from './services/user.service';
 import { ValidateService } from './services/validate.service';
@@ -84,7 +85,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     Ng2CarouselamosModule,
     FlashMessagesModule.forRoot(),
-    AgmCoreModule.forRoot({apiKey:'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs'})
+    AgmCoreModule.forRoot({apiKey:'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs'}),
+    ReactiveFormsModule
   ],
   providers: [UserService, ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]

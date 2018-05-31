@@ -109,7 +109,7 @@ router.put('/update/:id', (req, res) => {
     if (err) {
       console.log('/update/:id | PUT | Error was occurred');
       console.log(err.errmsg);
-      response.send(err.errmsg);
+      res.send(err.errmsg);
     } else
       res.send("Booking " + id + " successfully updated!");
   });
@@ -142,7 +142,7 @@ router.delete('/delete/:id', (request, response) => {
       response.status(200).send(responseSchema);
     } else if (doc) {
 
-      CameraSchema.update({
+      CameraSchema.update({rezervari: id},{
         $pull: {
           rezervari: id
         }
@@ -154,7 +154,7 @@ router.delete('/delete/:id', (request, response) => {
           console.log("Reservation " + id + " deleted from CameraSchema!");
       });
 
-      ClientSchema.update({
+      ClientSchema.update({rezervare:id},{
         $unset: {
           rezervare: id
         }

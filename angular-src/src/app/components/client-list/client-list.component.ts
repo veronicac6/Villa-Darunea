@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { ReservationService } from '../../services/reservation.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-client-list',
@@ -12,12 +17,19 @@ export class ClientListComponent implements OnInit {
   clients: any[];
   reservations: any[];
 
-//  reservations = [{ camera: "camera1", nrPersoane: "2" }, { camera: "camera1", nrPersoane: "2" }];
+  constructor(
+    private clientService: ClientService,
+    private reservationService: ReservationService,
+    private flashMessage: FlashMessagesService,
+    private formBuilder: FormBuilder,
+    private router: Router) { }
 
-  constructor(private clientService: ClientService, private reservationService: ReservationService) { }
   checked = false;
+  selectedReservation = "";
+
 
   ngOnInit() {
+
     this.clientService.getClients().subscribe(
       data => {
         this.clients = data;
@@ -27,17 +39,66 @@ export class ClientListComponent implements OnInit {
 
     this.reservationService.getReservations().subscribe(
       data => {
-        this.rezervations = data;
+        this.reservations = data;
       }, //onNext-receive HTTP response
       err => { console.error(err); return false; } //onError-if returns an error code
     );
   }
-  //editClient() { }
-  //deleteClient() { }
 
-  addClient() { }
+  editClient() { }
+
+  deleteClient(clientId) {
+    this.clientService.deleteClient(clientId).subscribe(data => {
+      if (data) {
+        this.flashMessage.show("Client "+clientId+" was deleted!",
+          {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
+      }
+    });
+  }
+
+  onChange(val) {
+    this.selectedReservation = val;
+    console.log(this.selectedReservation);
+  }
+
+  save(myForm: NgForm) { }
+
+  onSubmit(myForm: NgForm) {
+    if (myForm.valid) {
+      const newClient = {
+        nume: myForm.value.surname,
+        prenume: myForm.value.name,
+        email: myForm.value.email,
+        telefon: myForm.value.contact,
+        rezervare: myForm.value.reservation
+      };
+      this.clientService.postClient(newClient)
+        .subscribe(data => {
+          if (data.success) {
+            this.flashMessage.show(data.msg,
+              {
+                cssClass: 'alert-success',
+                timeout: 5000
+              });
+            myForm.reset();
+            this.router.navigate(['dashboard']);
+
+          } else {
+            this.flashMessage.show(data.msg,
+              {
+                cssClass: 'alert-danger',
+                timeout: 5000
+              });
+          }
+        });
+    }
+  }
 
   showValue() {
     this.checked = !this.checked;
   }
+
 }

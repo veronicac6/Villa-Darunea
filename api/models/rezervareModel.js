@@ -11,8 +11,7 @@ const User = require('./userModel');
 const RezervareSchema = mongoose.Schema({
   client: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Client',
-    requiered: true
+    ref: 'Client'
   },
   camera: {
     type: mongoose.Schema.Types.ObjectId,

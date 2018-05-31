@@ -13,3 +13,8 @@
 .btn-info {
   margin-bottom: 5px;
 }
+
+input.ng-invalid.ng-touched
+{
+   border-color: red;
+}  
