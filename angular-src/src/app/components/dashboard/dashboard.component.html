@@ -1,54 +1,111 @@
 <div class="container">
-<h2 class="page-header">Dashboard</h2>
-<p>Welcome to your dashboard!</p>
+  <h2 class="page-header">Dashboard</h2>
+  <p>Welcome to your dashboard!</p>
 
 
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
         <button class="btn btn-light btn-lg btn-block" data-toggle="collapse" data-target="#collapseClients" aria-expanded="true" aria-controls="collapseClients">
           Clients
         </button>
       </h5>
-    </div>
-    <div class="collapse" id="collapseClients">
-      <div class="card card-body">
-        <app-client-list></app-client-list>
+      </div>
+      <div class="collapse" id="collapseClients">
+        <div class="card card-body">
+          <app-client-list></app-client-list>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
         <button class="btn btn-light btn-lg btn-block" data-toggle="collapse" data-target="#collapseRooms" aria-expanded="true" aria-controls="collapseRooms">
           Rooms
         </button>
       </h5>
-    </div>
-    <div class="collapse" id="collapseRooms">
-      <div class="card card-body">
-        <app-client-list></app-client-list>
+      </div>
+      <div class="collapse" id="collapseRooms">
+        <div class="card card-body">
+          <div class="container" style="overflow-x:auto;">
+            <h2>Rooms List</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nr.</th>
+                  <th>Name</th>
+                  <th>Capacity</th>
+                  <th>Villa</th>
+                  <th>Price</th>
+                  <th>Nr. of reservations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <ng-container *ngIf="onEdit"></ng-container> -->
+                <tr *ngFor="let room of rooms">
+                  <td>{{rooms.indexOf(room)+1}}</td>
+                  <td>{{ room.denumire }}</td>
+                  <td>{{ room.capacitate }}</td>
+                  <td>{{ room.villa }}</td>
+                  <td>{{ room.pret }}</td>
+                  <td>{{ room.rezervari.length }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
+    <div class="card" ng-controller="reservationController as reservation">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
         <button class="btn btn-light btn-lg btn-block" data-toggle="collapse" data-target="#collapseReservations" aria-expanded="true" aria-controls="collapseReservations">
           Reservations
         </button>
       </h5>
-    </div>
-    <div class="collapse" id="collapseReservations">
-      <div class="card card-body">
-        <app-client-list></app-client-list>
+      </div>
+      <div class="collapse" id="collapseReservations">
+        <div class="card card-body">
+          <div class="container" style="overflow-x:auto;">
+            <h2>Reservations List</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nr.</th>
+                  <th>Client</th>
+                  <th>Room</th>
+                  <th>Nr. of people</th>
+                  <th>Booking date</th>
+                  <th>Check-in date</th>
+                  <th>Check-out date</th>
+                  <th>Days</th>
+                  <th>Final price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <ng-container *ngIf="onEdit"></ng-container> -->
+                <tr *ngFor="let reservation of reservations">
+                  <td>{{reservations.indexOf(reservation)+1}}</td>
+                  <td *ngIf="reservation.client">{{ reservation.client }}</td>
+                    <td *ngIf="!reservation.client">-</td>
+                  <td>{{ reservation.camera }}</td>
+                  <td>{{ reservation.nrPersoane }}</td>
+                  <td>{{ reservation.dataCreare }}</td>
+                  <td>{{ reservation.dataCheckIn }}</td>
+                  <td>{{ reservation.dataCheckOut }}</td>
+                  <td ng-model="days"></td>
+                  <td>{{ reservation.pretTotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 

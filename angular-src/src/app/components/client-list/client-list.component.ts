@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
-import { ReservationService } from '../../services/reservation.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Validators, FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import 'rxjs/Rx';
+import { ReservationService } from '../../services/reservation.service';
 
 @Component({
   selector: 'app-client-list',
@@ -17,12 +17,13 @@ export class ClientListComponent implements OnInit {
   clients: any[];
   reservations: any[];
 
+
   constructor(
     private clientService: ClientService,
-    private reservationService: ReservationService,
     private flashMessage: FlashMessagesService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private reservationService: ReservationService) { }
 
   checked = false;
   selectedReservation = "";
@@ -43,21 +44,33 @@ export class ClientListComponent implements OnInit {
       }, //onNext-receive HTTP response
       err => { console.error(err); return false; } //onError-if returns an error code
     );
+
   }
 
+  showClients() {
+    this.clientService.getClients().subscribe(
+      data => {
+        this.clients = data;
+      }, //onNext-receive HTTP response
+      err => { console.error(err); return false; } //onError-if returns an error code
+    );
+  }
   editClient() { }
 
   deleteClient(clientId) {
     this.clientService.deleteClient(clientId).subscribe(data => {
       if (data) {
-        this.flashMessage.show("Client "+clientId+" was deleted!",
+        this.flashMessage.show("Client " + clientId + " was deleted!",
           {
             cssClass: 'alert-success',
             timeout: 5000
           });
+          this.showClients();
       }
     });
   }
+
+
 
   onChange(val) {
     this.selectedReservation = val;
@@ -95,10 +108,13 @@ export class ClientListComponent implements OnInit {
           }
         });
     }
+    this.showClients();
   }
 
   showValue() {
     this.checked = !this.checked;
   }
+
+
 
 }

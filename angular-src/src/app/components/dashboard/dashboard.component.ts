@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { RoomService } from '../../services/room.service';
+import { ReservationService } from '../../services/reservation.service';
 // import { UserService } from '../../services/user.service';
 
 @Component({
@@ -8,11 +9,37 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  rooms: any[];
+  reservations: any[];
 
-  clienti: any;
-  constructor(private http: HttpClient) { }
+
+
+
+  constructor(
+    private roomService: RoomService,
+    private reservationService: ReservationService) { }
 
   ngOnInit() {
+    this.roomService.getRooms().subscribe(
+      data => {
+        this.rooms = data;
+      },
+      err => { console.error(err); return false }
+    );
 
-    }
+    this.reservationService.getReservations().subscribe(
+      data => {
+        this.reservations = data;
+      }, //onNext-receive HTTP response
+      err => { console.error(err); return false; } //onError-if returns an error code
+    );
+
   }
+
+  angular.module('controller', [])
+  .controller('reservationController', reservationController);
+
+  function reservationController() {
+  this.days = "yes";
+}
+}

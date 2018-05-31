@@ -1,14 +1,14 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import {AuthGuard} from './guards/auth.guard';
-import {AgmCoreModule} from '@agm/core';
+import { AuthGuard } from './guards/auth.guard';
+import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { EditableTableModule } from 'ng-editable-table/editable-table/editable-table.module';
 
@@ -16,7 +16,8 @@ import { UserService } from './services/user.service';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { ClientService } from './services/client.service';
-import{ReservationService} from './services/reservation.service';
+import { ReservationService } from './services/reservation.service';
+import { RoomService } from './services/room.service';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
@@ -42,10 +43,10 @@ import { ClientListComponent } from './components/client-list/client-list.compon
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'booking', component: BookingComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'gallery', component: GalleryComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'about', component: AboutComponent },
@@ -85,10 +86,10 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     Ng2CarouselamosModule,
     FlashMessagesModule.forRoot(),
-    AgmCoreModule.forRoot({apiKey:'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs'}),
+    AgmCoreModule.forRoot({ apiKey: 'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs' }),
     ReactiveFormsModule
   ],
-  providers: [UserService, ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
+  providers: [UserService, RoomService,ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
