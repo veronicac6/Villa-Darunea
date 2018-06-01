@@ -14,20 +14,27 @@ export class ClientService {
       .map(res => res.json());
   }
 
+  getClient(id) {
+    let headers = new Headers;
+    headers.append("Content-Type", "application/json");
+    return this.http.get('http://localhost:3000/clienti/show/' + id, { headers: headers })
+    .map(res => res.json());
+
+  }
+
   postClient(client) {
     let headers = new Headers;
     headers.append("Content-Type", "application/json");
-
-    return this.http.post('http://localhost:3000/clienti/new',client, { headers: headers })
+    return this.http.post('http://localhost:3000/clienti/new', client, { headers: headers })
       .map(res => res.json());
   }
 
-  deleteClient(id){
+  deleteClient(id) {
     let headers = new Headers;
     headers.append("Content-Type", "application/json");
-
-    return this.http.delete('http://localhost:3000/clienti/delete/'+id, { headers: headers })
+    return this.http.delete('http://localhost:3000/clienti/delete/' + id, { headers: headers })
       .map(res => res);
   }
+
 
 }

@@ -71,7 +71,7 @@ router.get('/show/:id', (req, res) => {
       console.log(err.errmsg);
       res.send(err.errmsg);
     } else
-      res.send(doc);
+      res.json(doc);
   });
 });
 
