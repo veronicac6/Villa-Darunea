@@ -16,7 +16,9 @@ import { ReservationService } from '../../services/reservation.service';
 export class ClientListComponent implements OnInit {
   clients: any[];
   reservations: any[];
-
+  date = new Date();
+  checked = false;
+  selectedReservation = "";
 
   constructor(
     private clientService: ClientService,
@@ -24,10 +26,6 @@ export class ClientListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private reservationService: ReservationService) { }
-
-  checked = false;
-  selectedReservation = "";
-
 
   ngOnInit() {
 
@@ -65,7 +63,7 @@ export class ClientListComponent implements OnInit {
             cssClass: 'alert-success',
             timeout: 5000
           });
-          this.showClients();
+        this.showClients();
       }
     });
   }
@@ -110,11 +108,7 @@ export class ClientListComponent implements OnInit {
     }
     this.showClients();
   }
-
   showValue() {
     this.checked = !this.checked;
   }
-
-
-
 }

@@ -22,6 +22,10 @@ router.post('/new', function(req, res) {
     pretTotal: req.body.pretTotal
   });
 
+  // checkAvailability(){
+  //
+  // }
+
   rezervareNoua.save(function(err, doc) {
     if (err) {
       res.json({

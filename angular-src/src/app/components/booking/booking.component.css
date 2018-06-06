@@ -1,5 +1,20 @@
+.form-inline {
+  margin-top: 17px;
+}
 
-#calendar {
-  max-width: 900px;
-  margin: 40px auto;
+.form-group {
+  margin: 5px 5px 5px 5px;
+}
+
+.label {
+  margin-right: 3px;
+}
+
+.btn-info {
+  margin-bottom: 5px;
+}
+
+input.ng-invalid.ng-touched
+{
+   border-color: red;
 }

@@ -18,6 +18,7 @@ import { AuthService } from './services/auth.service';
 import { ClientService } from './services/client.service';
 import { ReservationService } from './services/reservation.service';
 import { RoomService } from './services/room.service';
+import { VillaService } from './services/villa.service';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
@@ -89,7 +90,7 @@ const appRoutes: Routes = [
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs' }),
     ReactiveFormsModule
   ],
-  providers: [UserService, RoomService,ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
+  providers: [UserService, VillaService, RoomService, ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

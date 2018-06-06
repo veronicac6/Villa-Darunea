@@ -3,20 +3,20 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class RoomService {
+export class VillaService {
 
   constructor(private http: Http) { }
 
-  getRooms() {
+  getVillas() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/camere/show', { headers: headers })
+    return this.http.get('http://localhost:3000/ville/show', { headers: headers })
       .map(res => res.json());
   }
-  getRoom(id) {
+  getVilla(id) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/camere/show/'+id, { headers: headers })
+    return this.http.get('http://localhost:3000/ville/show/'+id, { headers: headers })
       .map(res => res.json());
   }
 

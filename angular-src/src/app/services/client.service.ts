@@ -19,7 +19,6 @@ export class ClientService {
     headers.append("Content-Type", "application/json");
     return this.http.get('http://localhost:3000/clienti/show/' + id, { headers: headers })
     .map(res => res.json());
-
   }
 
   postClient(client) {

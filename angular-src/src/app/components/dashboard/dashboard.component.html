@@ -48,7 +48,7 @@
                   <td>{{rooms.indexOf(room)+1}}</td>
                   <td>{{ room.denumire }}</td>
                   <td>{{ room.capacitate }}</td>
-                  <td>{{ room.villa }}</td>
+                  <td>{{villaName[rooms.indexOf(room)]}}</td>
                   <td>{{ room.pret }}</td>
                   <td>{{ room.rezervari.length }}</td>
                 </tr>
@@ -89,9 +89,9 @@
                 <tr *ngFor="let reservation of reservations">
 
                   <td>{{reservations.indexOf(reservation)+1}}</td>
-                  <td *ngIf="reservation.client" (onCreate)="showClient(reservation.client)" >{{ reservation.client}}</td>
+                  <td *ngIf="reservation.client" >{{ clientName[reservations.indexOf(reservation)]}}</td>
                   <td *ngIf="!reservation.client">-</td>
-                  <td>{{ reservation.camera }}</td>
+                  <td>{{ roomName[reservations.indexOf(reservation)] }}</td>
                   <td>{{ reservation.nrPersoane }}</td>
                   <td>{{ reservation.dataCreare | date:shortDate }}</td>
                   <td>{{ reservation.dataCheckIn | date:shortDate }}</td>
