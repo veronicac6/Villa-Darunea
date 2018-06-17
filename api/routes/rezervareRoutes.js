@@ -146,7 +146,9 @@ router.delete('/delete/:id', (request, response) => {
       response.status(200).send(responseSchema);
     } else if (doc) {
 
-      CameraSchema.update({rezervari: id},{
+      CameraSchema.update({
+        rezervari: id
+      }, {
         $pull: {
           rezervari: id
         }
@@ -158,7 +160,9 @@ router.delete('/delete/:id', (request, response) => {
           console.log("Reservation " + id + " deleted from CameraSchema!");
       });
 
-      ClientSchema.update({rezervare:id},{
+      ClientSchema.update({
+        rezervare: id
+      }, {
         $unset: {
           rezervare: id
         }

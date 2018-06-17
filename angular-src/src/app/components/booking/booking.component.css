@@ -10,8 +10,13 @@
   margin-right: 3px;
 }
 
-.btn-info {
-  margin-bottom: 5px;
+#btnSubmit{
+  margin-top:20px;
+  border-radius:0;
+}
+
+.btn-link{
+  padding-left:0;
 }
 
 input.ng-invalid.ng-touched

@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 // User Schema
 const UserSchema = mongoose.Schema({
   nume: {
-    type: String
+    type: String,
+    requiered: true
+  },
+  prenume: {
+    type: String,
+    requiered: true
   },
   email: {
     type: String,

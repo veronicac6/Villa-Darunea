@@ -13,7 +13,7 @@ router.post('/new', (req, res) => {
     prenume: req.body.prenume,
     email: req.body.email,
     telefon: req.body.telefon,
-    rezervare: req.body.rezervare
+    // rezervare: req.body.rezervare
   });
 
   clientNou.save((err, user) => {
@@ -24,23 +24,24 @@ router.post('/new', (req, res) => {
       });
     } else {
 
-      RezervareSchema.update({
-        _id: clientNou.rezervare
-      }, {
-        $set: {
-          client: clientNou._id
-        }
-      }, (err, doc) => {
-        if (err) {
-          console.log('Saving client in RezervareSchema Error was occurred');
-          console.log(err.errmsg);
-        } else
-          console.log("Client " + clientNou._id + " added to RezervareSchema!");
-      });
+      // RezervareSchema.update({
+      //   _id: clientNou.rezervare
+      // }, {
+      //   $set: {
+      //     client: clientNou._id
+      //   }
+      // }, (err, doc) => {
+      //   if (err) {
+      //     console.log('Saving client in RezervareSchema Error was occurred');
+      //     console.log(err.errmsg);
+      //   } else
+      //     console.log("Client " + clientNou._id + " added to RezervareSchema!");
+      // });
 
       res.json({
         success: true,
-        msg: 'Client was successfully added!'
+        msg: 'Client '+clientNou._id+' was successfully added!',
+        clientId: clientNou._id
       });
     }
   });

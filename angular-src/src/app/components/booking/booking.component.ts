@@ -20,7 +20,8 @@ export class BookingComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private clientService: ClientService,
-    private flashMessage: FlashMessagesService
+    private flashMessage: FlashMessagesService,
+    private reservationService: ReservationService
   ) { }
 
   rooms: any[] = [];
@@ -50,8 +51,8 @@ export class BookingComponent implements OnInit {
     this.roomService.getRoom(myForm.value.camera).subscribe(data => {
       this.capacity = data.capacitate;
       this.price = data.pret;
-      console.log(this.price);
-      console.log(this.capacity);
+      // console.log(this.price);
+      // console.log(this.capacity);
     },
       err => { console.error(err); return false });
   }
@@ -60,7 +61,7 @@ export class BookingComponent implements OnInit {
     {
       this.CheckIn = new Date(myForm.value.checkIn);
       // this.CheckIn.setDate(this.CheckIn.getDate()+1);
-      console.log(this.CheckIn);
+      // console.log(this.CheckIn);
       // console.log(this.CheckIn);
     }
   }
@@ -69,7 +70,7 @@ export class BookingComponent implements OnInit {
     {
       this.CheckOut = new Date(myForm.value.checkOut);
       this.nrDays = new Date(this.CheckOut).getDate() - new Date(this.CheckIn).getDate()
-      console.log(this.CheckOut);
+      // console.log(this.CheckOut);
       // if (this.CheckOut == this.CheckIn) {
       //   this.stayTooShort = false;
       // } else this.stayTooShort = true;
@@ -81,6 +82,7 @@ export class BookingComponent implements OnInit {
 
   onSubmit(myForm: NgForm) {
     if (myForm.valid) {
+
       const newClient = {
         nume: myForm.value.surname,
         prenume: myForm.value.name,
@@ -88,48 +90,52 @@ export class BookingComponent implements OnInit {
         telefon: myForm.value.contact
       };
 
-      console.log(newClient);
-
-      this.clientService.postClient(newClient)
-        .subscribe(data => {
-          if (data.success) {
-            // console.log(data._id);
-          } else {
-            this.flashMessage.show("There is a problem with adding client, try later!",
-              {
-                cssClass: 'alert-danger',
-                timeout: 5000
-              });
-          }
-        });
-
       const newReservation = {
-        // client: newClient._id,
-        camera: myForm.value.camera._id,
+        client: "",
+        camera: myForm.value.camera,
         nrPersoane: myForm.value.nrPeople,
         dataCheckIn: myForm.value.checkIn,
         dataCheckOut: myForm.value.checkOut,
-        pretTotal: myForm.value.totalPrice
+        pretTotal: this.price * this.nrDays * myForm.value.nrPeople
       };
 
-      // this.reservationService.postReservation(newReservation)
-      //   .subscribe(data => {
-      //     if (data.success) {
-      //       this.flashMessage.show("Reservation was succesful!",
-      //         {
-      //           cssClass: 'alert-success',
-      //           timeout: 5000
-      //         });
-      //       console.log("Reservation added")
-      //     } else {
-      //       this.flashMessage.show("Sorry, it's not possible to create reservation, try later!",
-      //         {
-      //           cssClass: 'alert-danger',
-      //           timeout: 5000
-      //         });
-      //     }
-      //   });
+      this.clientService.postClient(newClient).subscribe(data => {
+        if (data.success) {
+          newReservation.client = data.clientId;
+        } else {
+          this.flashMessage.show("There is a problem with adding client, try later!",
+            {
+              cssClass: 'alert-danger',
+              timeout: 5000
+            });
+        }
+      });
+      console.log(newReservation);
 
+      this.reservationService.postReservation(newReservation).subscribe(data => {
+        if (data.success) {
+          this.flashMessage.show("Reservation was succesful!",
+            {
+              cssClass: 'alert-success',
+              timeout: 5000
+            });
+          // console.log("Reservation added");
+          // console.log(newReservation);
+        } else {
+          this.flashMessage.show("Sorry, it's not possible to create reservation, try later!",
+            {
+              cssClass: 'alert-danger',
+              timeout: 5000
+            });
+        }
+      });
+    } else {
+      this.flashMessage.show("Sorry, it's not possible to create reservation, try later!",
+        {
+          cssClass: 'alert-danger',
+          timeout: 5000
+        });
     }
   }
+
 }

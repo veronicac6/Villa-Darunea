@@ -1,75 +1,90 @@
-<div class="container">
-  <h2>Book a room</h2>
+<div class="container py-5">
+  <h2 class="text-center text-black mb-4">Book a room</h2>
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card rounded-0">
 
-  <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" class="form-horizontal">
+        <div class="card-header">
+          <h5>Fill the fields</h5>
+        </div>
 
-    <h5>Fill the fields</h5>
+        <div class="card-body">
+          <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" class="form-horizontal">
 
-    <div class="form-group">
-      <label class="col-xs-3">First Name</label>
-      <input type="text" class="form-control" name="name" ngModel required>
+            <div class="form-group">
+              <label class="col-xs-3">First Name</label>
+              <input type="text" class="form-control" name="name" ngModel required>
+            </div>
 
-    </div>
+            <div class="form-group">
+              <label class="col-xs-3">Last Name</label>
+              <input type="text" class="form-control" name="surname" ngModel required>
+            </div>
 
-    <div class="form-group">
-      <label class="col-xs-3">Last Name</label>
-      <input type="text" class="form-control" name="surname" ngModel required>
+            <div class="form-group">
+              <label class="col-xs-3">Email</label>
+              <input type="email" class="form-control" name="email" ngModel required email #email="ngModel">
+              <span class="help-bpx" *ngIf="email.touched && !email.valid ">Please enter the Email Value</span>
+            </div>
 
-    </div>
+            <div class="form-group">
+              <label class="col-xs-3">Contact number</label>
+              <input type="tel" class="form-control" name="contact" ngModel required>
 
-    <div class="form-group">
-      <label class="col-xs-3">Email</label>
-      <input type="email" class="form-control" name="email" ngModel required email #email="ngModel">
-      <span class="help-bpx" *ngIf="email.touched && !email.valid ">Please enter the Email Value</span>
-    </div>
+            </div>
 
-    <div class="form-group">
-      <label class="col-xs-3">Contact number</label>
-      <input type="tel" class="form-control" name="contact" ngModel required>
-
-    </div>
-
-    <div class="form-group">
-      <label class="col-xs-3">Room</label>
-      <div class="selectContainer">
-        <select class="form-control" name="camera" ngModel required (change)="getRoomData(myForm)">
+            <div class="form-group">
+              <label class="col-xs-3">Room</label>
+              <div class="selectContainer">
+                <select class="form-control" name="camera" ngModel required (change)="getRoomData(myForm)">
         <option  value="" disabled selected>Choose room</option>
         <ng-container  *ngFor="let room of rooms">
         <option [value]="room._id" >
-          Room {{room.denumire}} with the capacity {{room.capacitate}} of people, price {{room.pret}} lei.
+          Room "{{room.denumire}}" with the capacity of {{room.capacitate}} people and the price of {{room.pret}} lei/person.
         </option>
       </ng-container>
       <!-- <control-messages [control]="myForm.controls.reservation" class="error-msg messages text-left text-danger">reservation</control-messages> -->
       </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3">Number of people</label>
+              <input type="number" min="1" max="{{capacity| number }}" class="form-control" name="nrPeople" ngModel required nrPeople #nrPeople="ngModel">
+
+              <span class="help-bpx" *ngIf="nrPeople.value>capacity">The maximum value is {{capacity}}</span>
+              <span class="help-bpx" *ngIf="nrPeople.value==0 && nrPeople.touched">The minimum value is 1</span>
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3">Check-in</label>
+              <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" name="checkIn" ngModel required checkIn #checkIn="ngModel" (change)="getCheckIn(myForm)">
+            </div>
+            <div class="form-group">
+              <label class="col-xs-3">Check-out</label>
+              <input type="date" min="{{ CheckIn | date:'yyyy-MM-dd'}}" class="form-control" name="checkOut" ngModel required checkOut #checkOut="ngModel" (change)="getCheckOut(myForm)">
+              <!-- <ng-container *ngIf="checkOut.touched && !checkOut.valid && checkIn.touched && !checkIn.valid"> -->
+              <span class="help-bpx" *ngIf="((CheckOut | date:'yyyy-MM-dd')==(CheckIn | date:'yyyy-MM-dd')) && checkOut.touched && checkIn.touched">The stay is too short!</span>
+              <!-- </ng-container> -->
+            </div>
+
+            <div class="form-group">
+              <label class="col-xs-3">Total price</label>
+              <input readonly="readonly" type="text" class="form-control" value="{{price*nrDays*myForm.value.nrPeople}}" name="totalPrice" ngModel>
+            </div>
+
+            <div class="form-group">
+              <button id="btnSubmit" class="btn btn-success btn-lg btn-block" type="submit" (click)="save(myForm)"><b>BOOK</b></button>
+            </div>
+
+
+
+            <div class="form-group">
+              <button class="btn btn-link" (click)="myForm.reset()">Reset</button>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-xs-3">Number of people</label>
-      <input type="number" min="1" max="capacity" class="form-control" name="nrPeople" ngModel required nrPeople #nrPeople="ngModel">
-      <!-- BUG-->
-      <span class="help-bpx" *ngIf="nrPeople.value>capacity">The maximum value is {{capacity}}</span>
-    </div>
-    <div class="form-group">
-      <label class="col-xs-3">Check-in</label>
-      <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" name="checkIn" ngModel required (change)="getCheckIn(myForm)">
-    </div>
-    <div class="form-group">
-      <label class="col-xs-3">Check-out</label>
-      <input type="date" min="{{ CheckIn | date:'yyyy-MM-dd'}}" class="form-control" name="checkOut" ngModel required (change)="getCheckOut(myForm)">
-      <span class="help-bpx" *ngIf="(CheckOut | date:'yyyy-MM-dd')==(CheckIn | date:'yyyy-MM-dd')">The stay is too short!</span>
-    </div>
 
-    <div class="form-group">
-      <label class="col-xs-3">Total price</label>
-      <input disabled type="text" class="form-control" value="{{price*nrDays}}" name="totalPrice" ngModel required>
-    </div>
-
-    <div class="raw">
-      <div class="form-group">
-        <button class="btn btn-dafault" type="submit" (click)="save(myForm)">Submit</button>
-      </div>
-    </div>
-
-  </form>
-
+  </div>
 </div>

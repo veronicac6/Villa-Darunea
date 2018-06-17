@@ -32,15 +32,12 @@ const CameraSchema = mongoose.Schema({
     type: Number,
     min: 0,
     requiered: true
-  },
-  rezervari: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Rezervare'
-  }]
+  }
+  // ,
+  // rezervari: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Rezervare'
+  // }]
 });
-
-// CameraSchema.plugin(relationship, {
-//   relationshipPathName: 'villa'
-// });
 
 module.exports = mongoose.model('Camera', CameraSchema);
