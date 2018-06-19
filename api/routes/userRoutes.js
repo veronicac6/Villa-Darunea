@@ -6,15 +6,18 @@ const jwt = require('jsonwebtoken');
 const User = require('../controllers/userController'); // bring in the controller
 const UserSchema= require('../models/userModel');
 
-// (1) http://localhost:3000/users/register
-//
+//http://localhost:3000/users/register
 router.post('/register', function(req, res, next) {
   let newUser = new UserSchema({
     name: req.body.name,
+    surname:req.body.surname,
     email: req.body.email,
+    contactNumber:req.body.contactNumber,
     username: req.body.username,
-    password: req.body.password // plain text password
+    password: req.body.password, // plain text password
+    reservations:req.body.reservations
   });
+  console.log(newUser);
   //Add user in the database
   User.addUser(newUser, function(err, user) {
     if (err) {
@@ -32,8 +35,7 @@ router.post('/register', function(req, res, next) {
 });
 
 
-// (2) http://localhost:3000/users/authenticate
-//
+//  http://localhost:3000/users/authenticate
 router.post('/authenticate', function(req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
@@ -59,7 +61,6 @@ router.post('/authenticate', function(req, res, next) {
           token: 'JWT ' + token,
           user: {
             id: user._id,
-            name: user.name,
             username: user.username,
             email: user.email
           }
@@ -78,8 +79,7 @@ router.post('/authenticate', function(req, res, next) {
 //end /authenticate
 
 
-// (3) http://localhost:3000/users/profile
-//
+// http://localhost:3000/users/profile
 router.get('/profile', passport.authenticate('jwt', {
     session: false
   }),

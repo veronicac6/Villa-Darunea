@@ -12,10 +12,10 @@ const app = express();
 
 //API file for routes
 const users = require('./api/routes/userRoutes');
-const camere = require('./api/routes/cameraRoutes');
-const rezervari = require('./api/routes/rezervareRoutes');
-const ville = require('./api/routes/villaRoutes');
-const clienti=require('./api/routes/clientiRoutes');
+const rooms = require('./api/routes/roomRoutes');
+const reservations = require('./api/routes/reservationRoutes');
+const villas = require('./api/routes/villaRoutes');
+// const clienti=require('./api/routes/clientiRoutes');
 
 // Port number
 const port = 3000;
@@ -32,10 +32,10 @@ app.use(cors()); // matches the port 3000 of server and port 4200 of the client
 app.use(bodyParser.json());
 
 app.use('/users', users);
-app.use('/camere', camere);
-app.use('/rezervari', rezervari);
-app.use('/ville', ville);
-app.use('/clienti',clienti);
+app.use('/rooms', rooms);
+app.use('/reservations', reservations);
+app.use('/villas', villas);
+// app.use('/clienti',clienti);
 
 // Set Static Angular output folder
 app.use(express.static(path.join(__dirname, 'public'))); //  the directory name of the current file

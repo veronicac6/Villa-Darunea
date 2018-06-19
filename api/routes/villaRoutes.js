@@ -1,23 +1,21 @@
-// 'use strict';
+'use strict';
 
-const mongoose = require('mongoose');
 const config = require('../../config/database');
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const VillaSchema = require('../models/villaModel');
-//const Villa = require('../controllers/villaController'); // bring in the controller
+const RoomSchema = require('../models/roomModel');
 
-
-// (1) http://localhost:3000/ville/new
-//
+// http://localhost:3000/villas/new
 router.post('/new', function(req, res) {
 
-  let villaNoua = new VillaSchema({
-    denumire: req.body.denumire,
-    camere:req.body.camere
+  let newVilla = new VillaSchema({
+    name: req.body.name,
+    rooms: req.body.rooms
   });
 
-  villaNoua.save(function(err, doc) {
+  newVilla.save(function(err, doc) {
     if (err) {
       res.json({
         success: false,
@@ -32,9 +30,7 @@ router.post('/new', function(req, res) {
   });
 });
 
-
-//(2) http://localhost:3000/ville/show
-//
+// http://localhost:3000/villas/show
 router.get('/show', (request, response) => {
   VillaSchema.find((err, docs) => {
     if (err) {
@@ -43,12 +39,10 @@ router.get('/show', (request, response) => {
     }
     if (docs)
       response.send(docs);
-  });
+  }).populate("rooms", "name");
 });
 
-
-//(3) http://localhost:3000/ville/delete/:id
-//
+// http://localhost:3000/villas/delete/:id
 router.delete('/delete/:id', (request, response) => {
   let id = request.params.id;
 
@@ -78,31 +72,44 @@ router.delete('/delete/:id', (request, response) => {
       responseSchema.statusText = 'Villa was removed';
       responseSchema.errorType = undefined;
       response.status(200).send(responseSchema);
+
+      RoomSchema.update({
+          villa: id
+        }, {
+          $set: {
+            villa: ""
+          }
+        },
+        (err, doc) => {
+          if (err) {
+            console.log('Deleting room from VillaSchema.rooms Error was occurred');
+            console.log(err.errmsg);
+          } else {
+            console.log("Room " + id + " deleted from VillaSchema.rooms!");
+          }
+        });
+
     }
   });
 });
 
-
-//(4)http://localhost:3000/ville/update/:id
-//
+//http://localhost:3000/villas/update/:id
 router.put('/update/:id', (req, res) => {
   let id = req.params.id;
-  let rezervareData = req.body;
+  let reservationData = req.body;
   VillaSchema.update({
     _id: id
-  }, rezervareData, (err) => {
+  }, reservationData, (err) => {
     if (err) {
       console.log('/update/:id | PUT | Error was occurred');
       console.log(err.errmsg);
       res.send(err.errmsg);
     } else
-      res.send("Villa " + id + " successfully updated!");
+      res.send("Villa " + id + "was successfully updated!");
   });
 });
 
-
-// (5) http://localhost:3000/ville/show/:id
-//
+//http://localhost:3000/villas/show/:id
 router.get('/show/:id', (request, response) => {
   let id = request.params.id;
   VillaSchema.findOne({
@@ -114,8 +121,7 @@ router.get('/show/:id', (request, response) => {
       response.send(err.errmsg);
     } else
       response.send(doc);
-  });
+  }).populate("rooms", "name");
 });
-
 
 module.exports = router;

@@ -1,13 +1,15 @@
+'use strict';
+
 const mongoose = require('mongoose');
-// const Schema=mongoose.Schema;
+const config = require('../../config/database');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-  nume: {
+  name: {
     type: String,
     requiered: true
   },
-  prenume: {
+  surname: {
     type: String,
     requiered: true
   },
@@ -22,8 +24,16 @@ const UserSchema = mongoose.Schema({
   password: {
     type: String,
     requiered: true
-  }
+  },
+  contactNumber: {
+    type: String,
+    requiered:true
+  },
+  reservations: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Reservation',
+    requiered:true
+  }]
 });
 
-// Using the User model from outside
 module.exports = mongoose.model('User', UserSchema);
