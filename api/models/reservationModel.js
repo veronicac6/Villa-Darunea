@@ -17,7 +17,8 @@ const ReservationSchema = mongoose.Schema({
   },
   nrPeople: {
     type: Number,
-    requiered: true
+    requiered: true,
+    min:[1, 'The minimum number of people is 1']
   },
   createDate: {
     type: Date,
@@ -35,6 +36,7 @@ const ReservationSchema = mongoose.Schema({
   },
   totalPrice: {
     type: Number,
+    default:0,
     requiered: true
   }
 });

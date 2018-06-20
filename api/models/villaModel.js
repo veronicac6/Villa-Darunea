@@ -7,7 +7,8 @@ const config = require('../../config/database');
 const VillaSchema = mongoose.Schema({
   name: {
     type: String,
-    requiered: true
+    requiered: true,
+    unique:[true,'A villa with this name already exists.']
   },
   rooms: [{
     type: mongoose.Schema.Types.ObjectId,

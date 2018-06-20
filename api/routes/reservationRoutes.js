@@ -8,9 +8,11 @@ const RoomSchema = require('../models/roomModel');
 const UserSchema = require('../models/userModel');
 // const ClientSchema = require('../models/clientModel');
 
+
+
 //----------------------------------------------
 //http://localhost/reservations/new
-router.post('/new', function(req, res) {
+router.post('/new', (req, res) => {
 
   let newReservation = new ReservationSchema({
     user: req.body.user,
@@ -22,50 +24,87 @@ router.post('/new', function(req, res) {
     totalPrice: req.body.totalPrice
   });
 
-  newReservation.save(function(err, doc) {
+  // FUNCTION checkAvailability
+  function checkAvailability(array) {
+    var busy = false;
+    array.forEach(function(element) {
+      var reservCheckIn = new Date(element.checkInDate).getTime();
+      var reservCheckOut = new Date(element.checkOutDate).getTime();
+      var newReservCheckIn = new Date(newReservation.checkInDate).getTime();
+      var newReservCheckOut = new Date(newReservation.checkOutDate).getTime();
+      if (
+        newReservCheckIn >= reservCheckIn && newReservCheckIn <= reservCheckOut ||
+        newReservCheckOut >= reservCheckIn && newReservCheckOut <= reservCheckOut
+      ) {
+        busy = true;
+      }
+    });
+    return busy;
+  };
+
+  // Check availability ------------------------------------
+  RoomSchema.findOne({
+    "_id": newReservation.room
+  }, (err, doc) => {
     if (err) {
       res.json({
         success: false,
-        msg: 'Failed to add booking'
+        msg: "Error check availability was occurred"
       });
     } else {
+      if (checkAvailability(doc.reservations) == true) {
+        res.json({
+          success: false,
+          msg: 'Room is not available these dates'
+        });
+      } else {
+        console.log("Room is available these dates");
+        newReservation.save(function(err, doc) {
+          if (err) {
+            res.json({
+              success: false,
+              msg: 'Failed to save booking'
+            });
+          } else {
 
-      //----pushing reservation to room.reservations
-      RoomSchema.update({
-        _id: newReservation.room
-      }, {
-        $push: {
-          reservations: newReservation._id
-        }
-      }, (err, doc) => {
-        if (err) {
-          console.log('Pushing reservation in RoomSchema.reservations Error was occurred');
-          console.log(err.errmsg);
-        } else
-          console.log("Reservation " + newReservation._id + " was pushed to Roomchema.reservations!");
-      });
+            // ----pushing reservation to room.reservations
+            RoomSchema.update({
+              _id: newReservation.room
+            }, {
+              $push: {
+                reservations: newReservation._id
+              }
+            }, (err, doc) => {
+              if (err) {
+                console.log('Pushing reservation in RoomSchema.reservations Error was occurred');
+                res.send(err.errmsg);
+              } else
+                console.log("Reservation " + newReservation._id + " was pushed to Roomchema.reservations!");
+            });
 
-      //----pushing reservation to user.reservations
-      UserSchema.update({
-        _id: newReservation.user
-      }, {
-        $push: {
-          reservations: newReservation._id
-        }
-      }, (err, doc) => {
-        if (err) {
-          console.log('Pushing reservation in UserSchema.reservations Error was occurred');
-          console.log(err.errmsg);
-        } else
-          console.log("Reservation " + newReservation._id + " was pushed to UserSchema.reservations!");
-      });
-
-      res.json({
-        success: true,
-        msg: 'Reservation ' + newReservation._id + ' was done successfully'
-      });
+            // ----pushing reservation to user.reservations
+            UserSchema.update({
+              _id: newReservation.user
+            }, {
+              $push: {
+                reservations: newReservation._id
+              }
+            }, (err, doc) => {
+              if (err) {
+                console.log('Pushing reservation in UserSchema.reservations Error was occurred');
+                res.send(err.errmsg);
+              } else
+                console.log("Reservation " + newReservation._id + " was pushed to UserSchema.reservations!");
+            });
+            res.json({
+              success: true,
+              msg: 'Reservation ' + newReservation._id + ' was done successfully'
+            });
+          }
+        });
+      }
     }
-  });
+  }).populate('reservations', 'checkInDate checkOutDate -_id').exec();
 });
 
 //----------------------------------------------

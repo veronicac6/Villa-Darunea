@@ -7,11 +7,12 @@ const config = require('../../config/database');
 const RoomSchema = mongoose.Schema({
   name: {
     type: String,
-    requiered: true
+    requiered: true,
+    unique:[true,'The room with this name already exists.']
   },
   capacity: {
     type: Number,
-    min: 0,
+    min: [1, 'Minimum capacity is 1'],
     requiered: true
   },
   villa: {

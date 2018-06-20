@@ -15,7 +15,9 @@ const UserSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    requiered: true
+    requiered: true,
+    lowercase: true,
+    unique: [true, 'A user with this email address already exists, please use another one.']
   },
   username: {
     type: String,
@@ -27,13 +29,19 @@ const UserSchema = mongoose.Schema({
   },
   contactNumber: {
     type: String,
-    requiered:true
+    requiered: true
   },
   reservations: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Reservation',
+    requiered: true
+  }],
+  role: {
+    type: Number,
+    enum: [0, 1],//0-client; 1-admin
+    default: 0,
     requiered:true
-  }]
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema);
