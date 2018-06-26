@@ -8,6 +8,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthGuard } from './guards/auth.guard';
+import { LoggedOutGuard } from './guards/loggedOut.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { EditableTableModule } from 'ng-editable-table/editable-table/editable-table.module';
@@ -36,20 +38,20 @@ import { ResortComponent } from './components/resort/resort.component';
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { BookingComponent } from './components/booking/booking.component';
-import { ClientListComponent } from './components/client-list/client-list.component';
+// import { UsersComponent } from './components/users/users.component';
 
 
 
 //Array of routes
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'booking', component: BookingComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'booking', component: BookingComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard] },
   { path: 'gallery', component: GalleryComponent },
   { path: 'home', component: HomeComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [LoggedOutGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoggedOutGuard] },
   // { path: 'about', component: AboutComponent },
   // { path: 'gallery/#resort', component: ResortComponent },
   // { path: 'contact', component: ContactComponent },
@@ -75,7 +77,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     NotfoundComponent,
     BookingComponent,
-    ClientListComponent
+    // UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,7 @@ const appRoutes: Routes = [
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs' }),
     ReactiveFormsModule
   ],
-  providers: [UserService, VillaService, RoomService, ValidateService, AuthService, AuthGuard, ClientService, ReservationService],
+  providers: [UserService, VillaService, RoomService, ValidateService, AuthService, AuthGuard, LoggedOutGuard, AdminGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

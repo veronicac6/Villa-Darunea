@@ -2,6 +2,7 @@
 
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
   <div class="container justify-content-md-center">
+
     <div class="row ">
 
       <div class="col-sm-6">
@@ -23,7 +24,7 @@
 
           <ul class="navbar-nav ml-auto">
 
-            <li  class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
               <a class="nav-link" [routerLink]="['/']">HOME</a>
             </li>
 
@@ -39,7 +40,7 @@
               <a class="nav-link" [routerLink]="['/contact']">CONTACT</a>
             </li> -->
 
-            <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
               <a class="nav-link" [routerLink]="['/booking']">BOOK</a>
             </li>
 
@@ -58,22 +59,20 @@
             <li *ngIf="authService.loggedIn()" class="nav-item">
               <a class="nav-link" [routerLink]="['/profile']">PROFILE</a>
             </li>
+            <!-- BUG -DASHBOARD does not have animation  -->
             <li *ngIf="authService.loggedIn()" class="nav-item">
               <a class="nav-link" [routerLink]="['/dashboard']">DASHBOARD</a>
             </li>
-            <li  class="nav-item">
+            <li class="nav-item">
               <a *ngIf="authService.loggedIn()" class="nav-link" (click)="onLogoutClick()" href="#">LOGOUT</a>
             </li>
           </ul>
 
-
         </div>
         <!--END Menu-->
       </div>
-
       <!--END Content column-->
     </div>
   </div>
-
 </nav>
 <!--END Navbar-->

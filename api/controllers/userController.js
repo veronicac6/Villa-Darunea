@@ -20,6 +20,7 @@ module.exports.getUserByUsername = function(username, callback) {
 
 // (3) JWT Hash / Function addUser
 module.exports.addUser = function(newUser, callback) {
+
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(newUser.password, salt, function(err, hash) {
       if (err) throw err;

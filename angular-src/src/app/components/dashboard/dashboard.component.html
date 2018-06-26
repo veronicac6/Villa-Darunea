@@ -1,3 +1,40 @@
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header card-chart card-header-warning">
+        <div class="ct-chart" id="dailySalesChart"></div>
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">Daily Sales</h4>
+        <p class="card-category"><span class="text-success"><i class="fa fa-long-arrow-up"></i> 55%  </span> increase in today sales.</p>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">access_time</i> updated 4 minutes ago
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+  <div class="card">
+    <div class="card-header card-chart card-header-success">
+      <div class="ct-chart" id="completedTasksChart"></div>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">Completed Tasks</h4>
+      <p class="card-category">Last Campaign Performance</p>
+    </div>
+    <div class="card-footer">
+      <div class="stats">
+        <i class="material-icons">access_time</i> updated 2 minutes ago
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <div class="container">
   <h2 class="page-header">Dashboard</h2>
   <p>Welcome to your dashboard!</p>
@@ -14,7 +51,7 @@
       </div>
       <div class="collapse" id="collapseClients">
         <div class="card card-body">
-          <app-client-list></app-client-list>
+          <!-- <app-users></app-users> -->
         </div>
       </div>
     </div>
@@ -44,14 +81,14 @@
               </thead>
               <tbody>
                 <!-- <ng-container *ngIf="onEdit"></ng-container> -->
-                <tr *ngFor="let room of rooms">
+                <!-- <tr *ngFor="let room of rooms">
                   <td>{{rooms.indexOf(room)+1}}</td>
                   <td>{{ room.denumire }}</td>
                   <td>{{ room.capacitate }}</td>
                   <td>{{villaName[rooms.indexOf(room)]}}</td>
                   <td>{{ room.pret }}</td>
                   <td>{{ room.rezervari.length }}</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>
@@ -86,7 +123,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let reservation of reservations">
+                <!-- <tr *ngFor="let reservation of reservations">
 
                   <td>{{reservations.indexOf(reservation)+1}}</td>
                   <td *ngIf="reservation.client" >{{ clientName[reservations.indexOf(reservation)]}}</td>
@@ -98,7 +135,7 @@
                   <td>{{ reservation.dataCheckOut | date:shortDate}}</td>
                   <td>{{days[reservations.indexOf(reservation)]}}</td>
                   <td>{{ reservation.pretTotal }}</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>

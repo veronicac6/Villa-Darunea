@@ -1,3 +1,84 @@
+
+<div class="container py-5">
+  <form class="availForm center" id="change_dates" action="checkAvailability()" method="get">
+
+		<div class="search_wrapper search_wrapper_dates">
+			<div class="search_dates_arrival">
+				<label id="label-checkin">Check-in</label>
+				<div class="input_wrapper">
+					<input class="search_input uninitialized date-pick" type="date" value="{{currDate}}" data-value="{{currDate| date:'yyyy-MM-dd'}}" name="checkin" aria-labelledby="label-checkin"/>
+					<span class="icon search_calendar-icon"></span>
+				</div>
+			</div>
+
+            <div class="search_dates_departure">
+                <label id="label-checkout">Check-out</label>
+                <div class="input_wrapper">
+                    <input class="search_input uninitialized date-pick" value="2018-07-01" data-value="2018-07-01" name="checkout" aria-labellby="label-checkout"/>
+                    <span class="icon search_calendar-icon"></span>
+                </div>
+            </div>
+        </div>
+
+		<div class="search_wrapper guests">
+			<label for="adults">Guests</label>
+			<div class="tm-select search_select adults">
+				<select name="adults" class="tm-select_dropdown">
+
+						<option selected value="1">
+							1 adult
+						</option>
+
+						<option  value="2">
+							2 adults
+						</option>
+
+						<option  value="3">
+							3 adults
+						</option>
+
+						<option  value="4">
+							4 adults
+						</option>
+
+						<option  value="5">
+							5 adults
+						</option>
+
+						<option  value="6">
+							6 adults
+						</option>
+
+				</select>
+			</div>
+
+
+
+			<label for="children" class="invisible_spoken">Guests</label>
+				<div class="tm-select search_select children">
+					<select name="children" class="tm-select_dropdown">
+
+							<option selected value="0">
+								0 children
+							</option>
+
+							<option  value="1">
+								1 child
+							</option>
+
+							<option  value="2">
+								2 children
+							</option>
+
+					</select>
+				</div>
+		</div>
+        <div class="search_wrapper button">
+    <input type="hidden" name="h" value="bhvzmwak"/>
+            <input search-button class="btn search-btn" type="submit" value="Check availability" />
+        </div>
+    </form>
+</div>
 <div class="container py-5">
   <h2 class="text-center text-black mb-4">Book a room</h2>
   <div class="row">
@@ -12,57 +93,55 @@
           <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" class="form-horizontal">
 
             <div class="form-group">
-              <label class="col-xs-3">First Name</label>
+              <label class="col-xs-3">First name</label>
               <input type="text" class="form-control" name="name" ngModel required>
             </div>
 
             <div class="form-group">
-              <label class="col-xs-3">Last Name</label>
+              <label class="col-xs-3">Last name</label>
               <input type="text" class="form-control" name="surname" ngModel required>
             </div>
 
             <div class="form-group">
               <label class="col-xs-3">Email</label>
               <input type="email" class="form-control" name="email" ngModel required email #email="ngModel">
-              <span class="help-bpx" *ngIf="email.touched && !email.valid ">Please enter the Email Value</span>
+              <span class="form-text text-muted" *ngIf="email.touched && !email.valid ">Please enter the Email value</span>
             </div>
 
             <div class="form-group">
               <label class="col-xs-3">Contact number</label>
               <input type="tel" class="form-control" name="contact" ngModel required>
-
             </div>
 
             <div class="form-group">
               <label class="col-xs-3">Room</label>
               <div class="selectContainer">
                 <select class="form-control" name="camera" ngModel required (change)="getRoomData(myForm)">
-        <option  value="" disabled selected>Choose room</option>
-        <ng-container  *ngFor="let room of rooms">
-        <option [value]="room._id" >
-          Room "{{room.denumire}}" with the capacity of {{room.capacitate}} people and the price of {{room.pret}} lei/person.
-        </option>
-      </ng-container>
-      <!-- <control-messages [control]="myForm.controls.reservation" class="error-msg messages text-left text-danger">reservation</control-messages> -->
-      </select>
+                <option  value="" disabled selected>Choose room</option>
+                <ng-container  *ngFor="let room of rooms">
+                  <option [value]="room._id" >Room "{{room.denumire}}" with the capacity of {{room.capacitate}} people and the price of {{room.pret}} lei/person.</option>
+                </ng-container>
+                </select>
               </div>
             </div>
+
             <div class="form-group">
               <label class="col-xs-3">Number of people</label>
               <input type="number" min="1" max="{{capacity| number }}" class="form-control" name="nrPeople" ngModel required nrPeople #nrPeople="ngModel">
-
-              <span class="help-bpx" *ngIf="nrPeople.value>capacity">The maximum value is {{capacity}}</span>
-              <span class="help-bpx" *ngIf="nrPeople.value==0 && nrPeople.touched">The minimum value is 1</span>
+              <span class="form-text text-muted" *ngIf="nrPeople.value>capacity">The maximum value is {{capacity}}</span>
+              <span class="form-text text-muted" *ngIf="nrPeople.value==0 && nrPeople.touched">The minimum value is 1</span>
             </div>
+
             <div class="form-group">
               <label class="col-xs-3">Check-in</label>
-              <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" name="checkIn" ngModel required checkIn #checkIn="ngModel" (change)="getCheckIn(myForm)">
+              <input type="date" min="{{currDate | date:'yyyy-MM-dd'}}" class="form-control" name="checkIn" ngModel required checkIn #checkIn="ngModel" (change)="getCheckIn(myForm)">
             </div>
+
             <div class="form-group">
               <label class="col-xs-3">Check-out</label>
               <input type="date" min="{{ CheckIn | date:'yyyy-MM-dd'}}" class="form-control" name="checkOut" ngModel required checkOut #checkOut="ngModel" (change)="getCheckOut(myForm)">
               <!-- <ng-container *ngIf="checkOut.touched && !checkOut.valid && checkIn.touched && !checkIn.valid"> -->
-              <span class="help-bpx" *ngIf="((CheckOut | date:'yyyy-MM-dd')==(CheckIn | date:'yyyy-MM-dd')) && checkOut.touched && checkIn.touched">The stay is too short!</span>
+              <span class="form-text text-muted" *ngIf="((CheckOut | date:'yyyy-MM-dd')==(CheckIn | date:'yyyy-MM-dd')) && checkOut.touched && checkIn.touched">The stay is too short!</span>
               <!-- </ng-container> -->
             </div>
 
@@ -72,9 +151,8 @@
             </div>
 
             <div class="form-group">
-              <button id="btnSubmit" class="btn btn-success btn-lg btn-block" type="submit" (click)="save(myForm)"><b>BOOK</b></button>
+              <button id="btnSubmit" class="btn btn-success btn-lg btn-block" type="submit" ><b>Book</b></button>
             </div>
-
 
 
             <div class="form-group">

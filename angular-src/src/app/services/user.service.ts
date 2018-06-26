@@ -7,10 +7,10 @@ export class UserService {
   constructor() {
     this.isUserLoggedIn= false;
   }
-  setUserLoggedIn(){
-    this.isUserLoggedIn=true;
-  }
-  getUserLoggedIn(){
-    return this.isUserLoggedIn;
-  }
+  // setUserLoggedIn(){
+  //   this.isUserLoggedIn=true;
+  // }
+  // getUserLoggedIn(){
+  //   return this.isUserLoggedIn;
+  // }
 }

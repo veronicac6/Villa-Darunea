@@ -11,25 +11,47 @@
               <h3 class="mb-0">Register</h3>
             </div>
             <div class="card-body">
-              <form (submit)='onRegisterSubmit()' class="form" id="formRegister">
+              <form #myForm="ngForm" (ngSubmit)='onRegisterSubmit(myForm)' class="form">
+
                 <div class="form-group">
-                  <label >Full Name</label>
-                  <input type="text" [(ngModel)]="name" name="name" class="form-control form-control-lg rounded-0" >
+                  <label>First name</label>
+                  <input type="text" class="form-control" name="name"  ngModel required>
                 </div>
+
+                <div class="form-group">
+                  <label>Last name</label>
+                  <input type="text" ngModel name="surname" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email"  name="email" #email="ngModel" email ngModel class="form-control" required>
+                    <span class="form-text text-muted" *ngIf="email.touched && !email.valid && !validateEmail(email)">Please enter the Email value</span>
+                </div>
+
+                <div class="form-group">
+                  <label>Contact number</label>
+                  <input type="tel" name="contactNumber" class="form-control" ngModel required>
+                </div>
+
                 <div class="form-group">
                   <label>Username</label>
-                  <input type="text" [(ngModel)]="username" name="username" class="form-control form-control-lg rounded-0">
+                  <input type="text" name="username" class="form-control " ngModel required>
                 </div>
-                <div class="form-group">
-                  <label >Email</label>
-                  <input type="text" [(ngModel)]="email" name="email" class="form-control form-control-lg rounded-0" >
-                </div>
+
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" [(ngModel)]="password" name="password" class="form-control form-control-lg rounded-0">
+                  <input type="password"   #password="ngModel" password name="password" class="form-control" ngModel required>
                 </div>
+
+                <div class="form-group">
+                  <label>Confirm Password</label>
+                  <input type="password" name="confirmPassword" #confirmPassword="ngModel" confirmPassword  class="form-control" ngModel required>
+                  <span class="form-text text-muted" *ngIf="confirmPassword.value!==password.value && confirmPassword.touched">Password does not match</span>
+                </div>
+
                 <flash-messages></flash-messages>
-                <button type="submit" class="btn btn-success btn-lg float-right" id="btnRegister">Register</button>
+                <button type="submit" class="btn btn-success btn-lg float-right" id="btnRegister" >Register</button>
               </form>
             </div>
             <!--/card-block-->

@@ -4,25 +4,31 @@ const passport = require('passport');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../controllers/userController'); // bring in the controller
-const UserSchema= require('../models/userModel');
+const UserSchema = require('../models/userModel');
 
 //http://localhost:3000/users/register
 router.post('/register', function(req, res, next) {
   let newUser = new UserSchema({
     name: req.body.name,
-    surname:req.body.surname,
+    surname: req.body.surname,
     email: req.body.email,
-    contactNumber:req.body.contactNumber,
+    contactNumber: req.body.contactNumber,
     username: req.body.username,
     password: req.body.password, // plain text password
-    reservations:req.body.reservations,
-    role:req.body.role
+    reservations: req.body.reservations,
+    role: req.body.role
   });
-  console.log(newUser);
+  // console.log(newUser);
   //Add user in the database
   User.addUser(newUser, function(err, user) {
     if (err) {
-      res.json({
+      if (err.name === 'BulkWriteError' && err.code === 11000) {
+        res.json({
+          success: false,
+          msg: 'This email address is already used, please another one'
+        });
+        // console.log(err.errmsg)
+      } else res.json({
         success: false,
         msg: 'Failed to register user'
       });

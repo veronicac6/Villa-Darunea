@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
 //import { Router } from '@angular/router';
-// import {BookingService} from '../../services/booking.service';
 import { RoomService } from '../../services/room.service';
 import { NgForm } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
@@ -31,7 +30,7 @@ export class BookingComponent implements OnInit {
   nrDays: any;
   CheckIn: any = new Date();
   CheckOut: any = new Date();
-  date = new Date();
+  currDate = new Date();
   // stayTooShort: boolean = false;
 
   ngOnInit() {

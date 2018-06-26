@@ -24,6 +24,9 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  // user: Object;
+  // console.log(user);
+adminVal:false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -31,15 +34,23 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.authService.getProfile().subscribe(
+    //   profile => { this.user = profile.user; },
+    //   err => { console.log(err); return false; }
+    // );
+    //
+    // this.adminVal=this.authService.isAdmin(this.user);
   }
 
   onLogoutClick() {
     this.authService.logout();
-      this.flashMessage.show('You are now logged out', {
-        cssClass: 'alert-success',
-        timeout: 3000
-      });
+    this.flashMessage.show('You are now logged out', {
+      cssClass: 'alert-success',
+      timeout: 3000
+    });
     this.router.navigate(['/login']);
+    // adminVar = false;
     return false;
+    // userRole=null;
   }
 }
