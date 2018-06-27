@@ -12,6 +12,7 @@ import { LoggedOutGuard } from './guards/loggedOut.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 //import { EditableTableModule } from 'ng-editable-table/editable-table/editable-table.module';
 
 import { UserService } from './services/user.service';
@@ -90,7 +91,8 @@ const appRoutes: Routes = [
     Ng2CarouselamosModule,
     FlashMessagesModule.forRoot(),
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs' }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2GoogleChartsModule
   ],
   providers: [UserService, VillaService, RoomService, ValidateService, AuthService, AuthGuard, LoggedOutGuard, AdminGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]

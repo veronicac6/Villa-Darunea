@@ -8,13 +8,16 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: Object;
-  constructor(private authService: AuthService){ }
+  user: object;
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.getProfile().subscribe(
-      profile => {this.user = profile.user;},
-      err => {console.log(err); return false;}
+      profile => {
+      this.user = profile.user;
+        // console.log(this.user);
+      },
+      err => { console.log(err); return false; }
     );
   }
 

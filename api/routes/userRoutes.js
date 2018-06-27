@@ -69,8 +69,9 @@ router.post('/authenticate', function(req, res, next) {
           user: {
             id: user._id,
             username: user.username,
-            email: user.email
-          }
+            email: user.email,
+            role:user.role
+          },
         });
       } else { // If !isMatch
         return res.json({

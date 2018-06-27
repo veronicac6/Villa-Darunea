@@ -60,7 +60,8 @@
               <a class="nav-link" [routerLink]="['/profile']">PROFILE</a>
             </li>
             <!-- BUG -DASHBOARD does not have animation  -->
-            <li *ngIf="authService.loggedIn()" class="nav-item">
+            <li *ngIf="authService.loggedIn() && authService.isAdmin()" class="nav-item">
+              <!-- <a>{{authService.getProfile()}}</a> -->
               <a class="nav-link" [routerLink]="['/dashboard']">DASHBOARD</a>
             </li>
             <li class="nav-item">

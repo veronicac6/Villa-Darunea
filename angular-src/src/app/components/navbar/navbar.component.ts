@@ -24,9 +24,11 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  adminRole: any;
+  // adminVal = false;
   // user: Object;
   // console.log(user);
-adminVal:false;
+  // adminVal:false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -35,9 +37,26 @@ adminVal:false;
 
   ngOnInit() {
     // this.authService.getProfile().subscribe(
-    //   profile => { this.user = profile.user; },
+    //   profile => {
+    //     this.user = profile.user;
+    //     // console.log(this.user.role);
+    //     if (this.user.role == 1) {
+    //       // console.log("da");
+    //       this.adminVal = true;
+    //     } else this.adminVal=false;
+    //   },
     //   err => { console.log(err); return false; }
     // );
+
+    // this.adminVal=false;
+    // this.authService.getProfile().subscribe(
+    //   profile => { this.adminRole = profile.user.role; },
+    //   err => { console.log(err); return false; }
+    // );
+    // console.log(this.adminRole);
+    // if (this.adminRole = "1") {
+    //   this.adminVal = true;
+    // }
     //
     // this.adminVal=this.authService.isAdmin(this.user);
   }
@@ -49,8 +68,23 @@ adminVal:false;
       timeout: 3000
     });
     this.router.navigate(['/login']);
-    // adminVar = false;
+    // this.adminVar = false;
     return false;
     // userRole=null;
+    // this.adminVal = false;
+  }
+
+  isAdmin() {
+    this.authService.getProfile().subscribe(
+      profile => {
+        this.adminRole = profile.user.role;
+        // console.log(this.user.role);
+      },
+      err => { console.log(err); return false; }
+    );
+
+    if (this.adminRole == 1) {
+      return true;
+    } else { return false; };
   }
 }

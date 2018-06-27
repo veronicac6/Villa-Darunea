@@ -6,5 +6,15 @@
   border-top-left-radius: 0px;
 }
 .card-header{
-  padding: 0px 0px 0px 0px;
+  margin: 3px;
+}
+
+.card {
+  margin: 8px ;
+}
+
+.main-panel{
+  padding: 30px 20px 30px 20px;
+  background-color: #E6E6E6;
+
 }
