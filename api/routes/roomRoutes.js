@@ -75,8 +75,7 @@ router.get('/show', (request, response) => {
         path: 'user',
         select: 'email contactNumber-_id'
       }
-    })
-    .exec((err, docs) => {
+    }).exec((err, docs) => {
       if (err) {
         console.log('/show | GET | Error was occurred');
         response.send(err.errmsg);

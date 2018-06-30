@@ -46,7 +46,6 @@ export class AuthService {
     this.user = user;
     // this.adminRole=user.role;
     // console.log(this.adminRole);
-
   }
   // ----------------------------------------
   loadToken() {
@@ -72,4 +71,12 @@ export class AuthService {
     localStorage.clear();
     // this.isAdmin();
   }
+
+  //............................................
+  getUsers(){
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  return this.http.get('http://localhost:3000/users/show', { headers: headers })
+    .map(res => res.json());
+}
 }

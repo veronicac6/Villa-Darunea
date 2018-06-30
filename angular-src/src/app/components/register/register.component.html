@@ -49,9 +49,8 @@
                   <input type="password" name="confirmPassword" #confirmPassword="ngModel" confirmPassword  class="form-control" ngModel required>
                   <span class="form-text text-muted" *ngIf="confirmPassword.value!==password.value && confirmPassword.touched">Password does not match</span>
                 </div>
-
-                <flash-messages></flash-messages>
-                <button type="submit" class="btn btn-success btn-lg float-right" id="btnRegister" >Register</button>
+                
+                <button type="submit" class="btn btn-success btn-lg float-right" id="btnRegister">Register</button>
               </form>
             </div>
             <!--/card-block-->

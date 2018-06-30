@@ -98,17 +98,17 @@ export class BookingComponent implements OnInit {
         pretTotal: this.price * this.nrDays * myForm.value.nrPeople
       };
 
-      this.clientService.postClient(newClient).subscribe(data => {
-        if (data.success) {
-          newReservation.client = data.clientId;
-        } else {
-          this.flashMessage.show("There is a problem with adding client, try later!",
-            {
-              cssClass: 'alert-danger',
-              timeout: 5000
-            });
-        }
-      });
+      // this.clientService.postClient(newClient).subscribe(data => {
+      //   if (data.success) {
+      //     newReservation.client = data.clientId;
+      //   } else {
+      //     this.flashMessage.show("There is a problem with adding client, try later!",
+      //       {
+      //         cssClass: 'alert-danger',
+      //         timeout: 5000
+      //       });
+      //   }
+      // });
       console.log(newReservation);
 
       this.reservationService.postReservation(newReservation).subscribe(data => {

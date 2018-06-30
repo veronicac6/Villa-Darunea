@@ -1,40 +1,38 @@
-<div class="container">
-  <h2>Clients List</h2>
-  <div class="container">
+<!-- <div class="container"> -->
+
+<!-- <div class="container">
     <button class="btn btn-info btn-sm" (click)="show=!show"><b>Add client</b></button>
-  </div>
-  <div class="container" *ngIf="show">
+  </div> -->
+<!-- <div class="container" *ngIf="show">
 
     <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" class="form-horizontal">
-      <!-- [formGroup]="myForm" -->
+
 
       <h5>Client</h5>
 
       <div class="form-group">
         <label class="col-xs-3"> First Name</label>
         <input type="text" class="form-control" name="name" ngModel required>
-        <!-- formControlName="name" -->
-        <!-- <control-messages [control]="myForm.controls.name" class="error-msg messages text-left text-danger">name</control-messages> -->
+
       </div>
 
       <div class="form-group">
         <label class="col-xs-3">Last Name</label>
         <input type="text" class="form-control" name="surname" ngModel required>
-        <!-- formControlName="surname" -->
-        <!-- <control-messages [control]="myForm.controls.surname" class="error-msg messages text-left text-danger">surname</control-messages> -->
+
       </div>
 
       <div class="form-group">
         <label class="col-xs-3">Email</label>
         <input type="email" class="form-control" name="email" ngModel required email #email="ngModel">
         <span class="help-bpx" *ngIf="email.touched && !email.valid ">Please enter the Email Value</span>
-        <!-- <control-messages [control]="myForm.controls.email" class="error-msg messages text-left text-danger">email</control-messages> -->
+
       </div>
 
       <div class="form-group">
         <label class="col-xs-3">Contact number</label>
         <input type="tel" class="form-control" name="contact" ngModel required>
-        <!-- <control-messages [control]="myForm.controls.contact" class="error-msg messages text-left text-danger">contact</control-messages> -->
+
       </div>
 
       <div class="form-group">
@@ -53,48 +51,109 @@
             Booked at {{reservation.dataCreare}}, for {{reservation.nrPersoane}} people, check-in day {{reservation.dataCheckIn}}, check-out day {{reservation.dataCheckOut}}.
           </option>
         </ng-container>
-        <!-- <control-messages [control]="myForm.controls.reservation" class="error-msg messages text-left text-danger">reservation</control-messages> -->
-        </select>
+
         </div>
       </div>
 
       <div class="raw">
         <div class="form-group">
-          <button class="btn btn-dafault" type="submit" (click)="save(myForm)">ADD CLIENT</button>
-          <!-- [disabled]="!form.valid" -->
+          <button class="btn btn-dafault" type="submit" >ADD CLIENT</button>
+
         </div>
       </div>
 
     </form>
+  </div> -->
+<div class="col-xl-12 col-lg-12 col-md-12 col-12" style="overflow-x:auto;">
+  <h2 style="display:inline;">Users List</h2>
+  <div style="float: right;">
+    <input type="text" [(ngModel)]="searchText" class="" placeholder="Search By Username">
+    <fa name="search"></fa>
   </div>
-  <div class="container" style="overflow-x:auto;">
-    <table class="table">
-      <thead>
+  <table class="table table-hover">
+    <thead style="background-color: #E6E6E6;">
+      <tr>
+        <th scope="col">Nr.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Email</th>
+        <th scope="col">Username</th>
+        <th scope="col">Contact number</th>
+        <th scope="col">Reservations</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of users | searchByUsername: searchText:'username'">
         <tr>
-          <th>Nr.</th>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Email</th>
-          <th>Contact number</th>
-          <th>Reservation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <ng-container *ngIf="onEdit"></ng-container> -->
-        <tr *ngFor="let client of clients">
-          <td>{{clients.indexOf(client)+1}}</td>
-          <td>{{ client.nume }}</td>
-          <td>{{ client.prenume }}</td>
-          <td>{{ client.email }}</td>
-          <td>{{ client.telefon }}</td>
-          <td *ngIf="client.rezervare">✓</td>
-          <td *ngIf="!client.rezervare">-</td>
+          <td>{{users.indexOf(user)+1}}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.surname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.username }}</td>
+
+          <td *ngIf="user.contactNumber">{{ user.contactNumber }}</td>
+          <td *ngIf="!user.contactNumber">-</td>
+
+          <td *ngIf="user.reservations[0]">
+            <fa name="check"></fa>
+            <button type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="eye"></fa>({{user.reservations.length}})</button>
+          </td>
+          <td *ngIf="!user.reservations || user.reservations[0]==null">-</td>
+
           <td>
-            <button class="btn btn-success" disabled (click)="editClient()">Edit</button>
-            <button class="btn btn-danger" (click)="deleteClient(client._id)">Delete</button>
+            <button class="btn btn-success" disabled (click)="editUser()">Edit</button>
+            <!-- <button class="btn btn-danger" (click)="deleteClient(client._id)">Delete</button> -->
           </td>
         </tr>
-      </tbody>
-    </table>
-  </div>
+
+        <tr *ngIf="checked && user.reservations[0]">
+          <td colspan="8">
+            <table *ngFor="let reservation of user.reservations" class="col-xl-6 col-lg-6 col-md-10 col-6">
+              <tr>
+                <th colspan="2" style="background-color: white;">
+                  Reservation Nr. {{user.reservations.indexOf(reservation)+1}}
+                </th>
+              </tr>
+              <tr>
+                <th>Id: </th>
+                <td>
+                  <p class="text-muted">{{reservation._id}}</p>
+                </td>
+              </tr>
+              <tr>
+                <th>Room</th>
+                <td>{{reservation.room.name}}</td>
+              </tr>
+              <tr>
+                <th>Nr.people</th>
+                <td>{{reservation.nrPeople}}</td>
+
+              </tr>
+              <tr>
+                <th>Created</th>
+                <td>{{reservation.createDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+              </tr>
+              <tr>
+                <th>Check-in</th>
+                <td>{{reservation.checkInDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+              </tr>
+              <tr>
+                <th>Check-out</th>
+                <td>{{reservation.checkOutDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+              </tr>
+              <tr>
+                <th>Total Price</th>
+                <td>{{reservation.totalPrice}} MDL</td>
+              </tr>
+
+            </table>
+            <br>
+          </td>
+        </tr>
+
+      </ng-container>
+    </tbody>
+  </table>
 </div>
+<!-- </div> -->

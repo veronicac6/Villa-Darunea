@@ -13,7 +13,8 @@ import { AdminGuard } from './guards/admin.guard';
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {Ng2GoogleChartsModule} from 'ng2-google-charts';
-//import { EditableTableModule } from 'ng-editable-table/editable-table/editable-table.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 import { UserService } from './services/user.service';
 import { ValidateService } from './services/validate.service';
@@ -23,6 +24,8 @@ import { ReservationService } from './services/reservation.service';
 import { RoomService } from './services/room.service';
 import { VillaService } from './services/villa.service';
 
+ import {SearchByUsernamePipe} from './pipes/searchByUsername.pipe';
+import {SortPipe} from './pipes/sort.pipe';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
 import { ActivitiesComponent } from './components/activities/activities.component';
@@ -39,7 +42,7 @@ import { ResortComponent } from './components/resort/resort.component';
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { BookingComponent } from './components/booking/booking.component';
-// import { UsersComponent } from './components/users/users.component';
+import { UsersComponent } from './components/users/users.component';
 
 
 
@@ -62,6 +65,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
+    SearchByUsernamePipe,
+    SortPipe,
     AboutComponent,
     ActivitiesComponent,
     AppComponent,
@@ -78,7 +83,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     NotfoundComponent,
     BookingComponent,
-    // UsersComponent
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +97,8 @@ const appRoutes: Routes = [
     FlashMessagesModule.forRoot(),
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyCUiyQHus1lGFRpREvjxjs2rdltD7uuKvs' }),
     ReactiveFormsModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    AngularFontAwesomeModule
   ],
   providers: [UserService, VillaService, RoomService, ValidateService, AuthService, AuthGuard, LoggedOutGuard, AdminGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]

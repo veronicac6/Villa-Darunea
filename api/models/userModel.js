@@ -32,9 +32,8 @@ const UserSchema = mongoose.Schema({
     requiered: true
   },
   reservations: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Reservation',
-    requiered: true
+    type:  mongoose.Schema.Types.ObjectId,
+    ref: 'Reservation'
   }],
   role: {
     type: Number,

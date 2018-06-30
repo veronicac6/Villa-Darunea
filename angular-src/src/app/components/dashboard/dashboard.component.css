@@ -5,16 +5,31 @@
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
 }
-.card-header{
+/* .card-header{
   margin: 3px;
-}
+} */
 
 .card {
   margin: 8px ;
 }
 
 .main-panel{
-  padding: 30px 20px 30px 20px;
+  padding: 10px 20px 30px 20px;
   background-color: #E6E6E6;
 
+}
+
+.btn-group{
+  margin-bottom: 8px;
+   /* text-align: center; */
+}
+
+#headingOne, #headingTwo, #headingThree{
+
+  padding:0px;
+}
+
+.btn-lg{
+  background-color: #15CC71;
+  color: white;
 }

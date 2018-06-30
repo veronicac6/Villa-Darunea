@@ -15,7 +15,7 @@ router.post('/register', function(req, res, next) {
     contactNumber: req.body.contactNumber,
     username: req.body.username,
     password: req.body.password, // plain text password
-    reservations: req.body.reservations,
+    // reservations: req.body.reservations,
     role: req.body.role
   });
   // console.log(newUser);
@@ -70,7 +70,7 @@ router.post('/authenticate', function(req, res, next) {
             id: user._id,
             username: user.username,
             email: user.email,
-            role:user.role
+            role: user.role
           },
         });
       } else { // If !isMatch
@@ -86,7 +86,7 @@ router.post('/authenticate', function(req, res, next) {
 });
 //end /authenticate
 
-
+//-------------------------------------------------
 // http://localhost:3000/users/profile
 router.get('/profile', passport.authenticate('jwt', {
     session: false
@@ -97,5 +97,17 @@ router.get('/profile', passport.authenticate('jwt', {
     });
   });
 
+//------------------------------------------------
+// http://localhost:3000/users/show
+router.get('/show', (req, res) => {
+  UserSchema.find((err, docs) => {
+    if (err) {
+      console.log('/show | GET | Error was occurred');
+      res.send(err.errmsg);
+    }
+    if (docs)
+      res.send(docs);
+  }).populate({path:'reservations', populate:{path:'room', select:'name'}});
+});
 
 module.exports = router;

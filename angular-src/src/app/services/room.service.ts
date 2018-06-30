@@ -10,13 +10,13 @@ export class RoomService {
   getRooms() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/camere/show', { headers: headers })
+    return this.http.get('http://localhost:3000/rooms/show', { headers: headers })
       .map(res => res.json());
   }
   getRoom(id) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/camere/show/'+id, { headers: headers })
+    return this.http.get('http://localhost:3000/rooms/show/'+id, { headers: headers })
       .map(res => res.json());
   }
 

@@ -1,3 +1,30 @@
-<p>
-  rooms works!
-</p>
+<div class="col-xl-12 col-lg-12 col-md-12 col-12" style="overflow-x:auto;">
+  <h2 style="display:inline;">Rooms List</h2>
+  <div style="float: right;">
+    <input  type="text" [(ngModel)]="searchText" class="" placeholder="Search By Name">
+    <fa name="search"></fa>
+  </div>
+  <table class="table table-hover">
+    <thead style="background-color: #E6E6E6;">
+      <tr>
+        <th>Nr.</th>
+        <th>Name</th>
+        <th>Capacity</th>
+        <th>Villa</th>
+        <th>Price</th>
+        <th>Nr. of reservations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <ng-container *ngIf="onEdit"></ng-container> -->
+      <tr *ngFor="let room of rooms">
+        <td>{{rooms.indexOf(room)+1}}</td>
+        <td>{{ room.name }}</td>
+        <td>{{ room.capacity }}</td>
+        <td>{{room.villa.name}}</td>
+        <td>{{ room.price }}</td>
+        <td>{{ room.reservations.length}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

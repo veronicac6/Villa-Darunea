@@ -27,12 +27,31 @@ export class DashboardComponent implements OnInit {
   villaName: any[] = [];
   roomName: any[] = [];
 
+  // showCharts = true;
+  // showLists = false;
+  selectedLink = 'Charts';
 
   constructor(
     private roomService: RoomService,
     private reservationService: ReservationService,
     private clientService: ClientService,
     private villaService: VillaService) { }
+
+
+  setRadio(val) {
+    this.selectedLink = val;
+    // console.log(this.selectedLink);
+  }
+
+  isSelected(name) {
+    if (!this.selectedLink) {
+      // console.log('no selectedLink')
+      return false;
+    } else {
+      // console.log(this.selectedLink);
+      return (this.selectedLink == name);
+    }
+  }
 
 
   ngOnInit() {
@@ -105,11 +124,11 @@ export class DashboardComponent implements OnInit {
       ['Wednesday', 2],
       ['Thursday', 2],
       ['Friday', 7],
-      ['Saturday',10],
-      ['Sunday',12]
+      ['Saturday', 10],
+      ['Sunday', 12]
     ],
-    options: { title: 'Visitors',curveType: 'function',legend: { position: 'right' },colors: ['#7210A3']},
-  };
+    options: { title: 'Visitors', curveType: 'function', legend: { position: 'right' }, colors: ['#7210A3'] },
+  }
   columnChartData = {
     chartType: 'ColumnChart',
     dataTable: [
@@ -120,8 +139,8 @@ export class DashboardComponent implements OnInit {
       ['Watch TV', 2],
       ['Sleep', 7]
     ],
-    options: { title: 'Tasks',colors: ['#7210A3']},
-  };
+    options: { title: 'Tasks', colors: ['#7210A3'] },
+  }
 
   geoChartData = {
     chartType: 'GeoChart',
@@ -135,6 +154,8 @@ export class DashboardComponent implements OnInit {
       ['RU', 700]
     ],
     options: { 'title': 'Countries', colors: ['#63450a'] },
-  };
+  }
+
+
 
 }
