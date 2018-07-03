@@ -1,8 +1,10 @@
 <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="overflow-x:auto;">
   <h2 style="display:inline;">Rooms List</h2>
   <div style="float: right;">
-    <input  type="text" [(ngModel)]="searchText" class="" placeholder="Search By Name">
-    <fa name="search"></fa>
+    <div style="display:flex; padding-bottom:5px;">
+      <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search By Name">
+      <fa name="search" style="padding:10px;"></fa>
+    </div>
   </div>
   <table class="table table-hover">
     <thead style="background-color: #E6E6E6;">
@@ -12,19 +14,68 @@
         <th>Capacity</th>
         <th>Villa</th>
         <th>Price</th>
-        <th>Nr. of reservations</th>
+        <th>Reservations</th>
       </tr>
     </thead>
     <tbody>
-      <!-- <ng-container *ngIf="onEdit"></ng-container> -->
-      <tr *ngFor="let room of rooms">
-        <td>{{rooms.indexOf(room)+1}}</td>
-        <td>{{ room.name }}</td>
-        <td>{{ room.capacity }}</td>
-        <td>{{room.villa.name}}</td>
-        <td>{{ room.price }}</td>
-        <td>{{ room.reservations.length}}</td>
-      </tr>
+      <ng-container *ngFor="let room of rooms| searchByName:searchText">
+        <tr>
+          <td>{{rooms.indexOf(room)+1}}</td>
+          <td>{{ room.name }}</td>
+          <td>{{ room.capacity }}</td>
+          <td>{{room.villa.name}}</td>
+          <td>{{ room.price }}</td>
+          <td *ngIf="room.reservations[0]">{{ room.reservations.length}}
+            <button *ngIf="room.reservations.length>0" type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="ellipsis-h"></fa></button>
+          </td>
+          <td *ngIf="!room.reservations || room.reservations[0]==null">-</td>
+        </tr>
+
+        <tr *ngIf="checked && room.reservations[0]">
+          <td colspan="8">
+            <table *ngFor="let reservation of room.reservations" class="col-xl-6 col-lg-6 col-md-10 col-6">
+              <tr>
+                <th colspan="2" style="background-color: white;">
+                  Reservation Nr. {{room.reservations.indexOf(reservation)+1}}
+                </th>
+              </tr>
+              <tr>
+                <th>Id: </th>
+                <td>
+                  <p class="text-muted">{{reservation._id}}</p>
+                </td>
+              </tr>
+              <tr>
+                <th>Room:</th>
+                <td>{{reservation.room.name}}</td>
+              </tr>
+              <tr>
+                <th>Nr.people:</th>
+                <td>{{reservation.nrPeople}}</td>
+
+              </tr>
+              <tr>
+                <th>Created:</th>
+                <td>{{reservation.createDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+              </tr>
+              <tr>
+                <th>Check-in:</th>
+                <td>{{reservation.checkInDate| date:"MM/dd/yyyy"}}</td>
+              </tr>
+              <tr>
+                <th>Check-out:</th>
+                <td>{{reservation.checkOutDate| date:"MM/dd/yyyy"}}</td>
+              </tr>
+              <tr>
+                <th>Total Price:</th>
+                <td>{{reservation.totalPrice}} MDL</td>
+              </tr>
+
+            </table>
+            <br>
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>

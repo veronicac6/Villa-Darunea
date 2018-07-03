@@ -70,10 +70,13 @@ router.get('/show', (request, response) => {
     .populate('villa', "name")
     .populate({
       path: 'reservations',
-      select: 'checkInDate checkOutDate user',
       populate: {
         path: 'user',
-        select: 'email contactNumber-_id'
+        select: ' username email contactNumber-_id'
+      },
+      populate:{
+        path:'room',
+        select:'name'
       }
     }).exec((err, docs) => {
       if (err) {
@@ -102,10 +105,9 @@ router.get('/show/:id', (request, response) => {
     .populate('villa', "name")
     .populate({
       path: 'reservations',
-      select: 'checkInDate checkOutDate user',
       populate: {
         path: 'user',
-        select: 'email contactNumber-_id'
+        select: ' username email contactNumber-_id'
       }
     })
     .exec();

@@ -67,8 +67,10 @@
 <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="overflow-x:auto;">
   <h2 style="display:inline;">Users List</h2>
   <div style="float: right;">
-    <input type="text" [(ngModel)]="searchText" class="" placeholder="Search By Username">
-    <fa name="search"></fa>
+    <div style="display:flex; padding-bottom:5px;">
+      <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search By Username">
+      <fa name="search" style="padding:10px;"></fa>
+    </div>
   </div>
   <table class="table table-hover">
     <thead style="background-color: #E6E6E6;">
@@ -84,7 +86,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let user of users | searchByUsername: searchText:'username'">
+      <ng-container *ngFor="let user of users | searchByUsername: searchText">
         <tr>
           <td>{{users.indexOf(user)+1}}</td>
           <td>{{ user.name }}</td>
@@ -96,8 +98,8 @@
           <td *ngIf="!user.contactNumber">-</td>
 
           <td *ngIf="user.reservations[0]">
-            <fa name="check"></fa>
-            <button type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="eye"></fa>({{user.reservations.length}})</button>
+            {{user.reservations.length}}
+            <button type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="ellipsis-h"></fa></button>
           </td>
           <td *ngIf="!user.reservations || user.reservations[0]==null">-</td>
 
@@ -122,28 +124,28 @@
                 </td>
               </tr>
               <tr>
-                <th>Room</th>
+                <th>Room:</th>
                 <td>{{reservation.room.name}}</td>
               </tr>
               <tr>
-                <th>Nr.people</th>
+                <th>Nr.people:</th>
                 <td>{{reservation.nrPeople}}</td>
 
               </tr>
               <tr>
-                <th>Created</th>
+                <th>Created:</th>
                 <td>{{reservation.createDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
               </tr>
               <tr>
-                <th>Check-in</th>
+                <th>Check-in:</th>
                 <td>{{reservation.checkInDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
               </tr>
               <tr>
-                <th>Check-out</th>
+                <th>Check-out:</th>
                 <td>{{reservation.checkOutDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
               </tr>
               <tr>
-                <th>Total Price</th>
+                <th>Total Price:</th>
                 <td>{{reservation.totalPrice}} MDL</td>
               </tr>
 

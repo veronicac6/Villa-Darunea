@@ -10,8 +10,7 @@ import {SearchByUsernamePipe} from '../../pipes/searchByUsername.pipe';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
-  pipes: [SearchByUsernamePipe]
+  styleUrls: ['./users.component.css']
 })
 
 export class UsersComponent implements OnInit {

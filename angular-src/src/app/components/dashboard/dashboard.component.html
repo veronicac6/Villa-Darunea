@@ -49,39 +49,7 @@
       </div>
       <div class="collapse show" id="collapseReservations">
         <div class="card card-body">
-          <div class="container" style="overflow-x:auto;">
-            <h2>Reservations List</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nr.</th>
-                  <th>Client Name</th>
-                  <th>Room</th>
-                  <th>Nr. of people</th>
-                  <th>Booking date</th>
-                  <th>Check-in date</th>
-                  <th>Check-out date</th>
-                  <th>Days</th>
-                  <th>Final price</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- <tr *ngFor="let reservation of reservations">
-
-                  <td>{{reservations.indexOf(reservation)+1}}</td>
-                  <td *ngIf="reservation.client" >{{ clientName[reservations.indexOf(reservation)]}}</td>
-                  <td *ngIf="!reservation.client">-</td>
-                  <td>{{ roomName[reservations.indexOf(reservation)] }}</td>
-                  <td>{{ reservation.nrPersoane }}</td>
-                  <td>{{ reservation.dataCreare | date:shortDate }}</td>
-                  <td>{{ reservation.dataCheckIn | date:shortDate }}</td>
-                  <td>{{ reservation.dataCheckOut | date:shortDate}}</td>
-                  <td>{{days[reservations.indexOf(reservation)]}}</td>
-                  <td>{{ reservation.pretTotal }}</td>
-                </tr> -->
-              </tbody>
-            </table>
-          </div>
+          <app-reservations></app-reservations>
         </div>
       </div>
     </div>

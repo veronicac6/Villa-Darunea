@@ -1,0 +1,61 @@
+<!-- <div class="container" style="overflow-x:auto;">
+  <h2>Reservations List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+</div> -->
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-12" style="overflow-x:auto;">
+  <h2 style="display:inline;">Reservations List</h2>
+  <div style="float: right;">
+    <!-- <div class="container"> -->
+   <div style="display:flex; padding-bottom:5px">
+     <input class="form-control" type="date" [(ngModel)]="searchCheckIn"  id="example-date-input"><fa name="minus" style="padding:15px;"></fa>
+      <input class="form-control" type="date"  [(ngModel)]="searchCheckOut"    id="example-date-input">
+   </div>
+    </div>
+    <table class="table table-hover">
+      <thead style="background-color: #E6E6E6;">
+        <tr>
+          <th>Nr.</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Room</th>
+          <th>Nr. of people</th>
+          <th>Booking date</th>
+          <th>Check-in date</th>
+          <th>Check-out date</th>
+          <th>Days</th>
+          <th>Final price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let reservation of reservations| searchByDate: searchCheckIn: searchCheckOut">
+          <tr>
+            <td>{{reservations.indexOf(reservation)+1}}</td>
+            <!-- <td><p class="text-muted">{{reservation._id}}</p></td> -->
+            <td>{{reservation.user.username}}</td>
+            <td>{{reservation.user.email }}</td>
+            <td>{{reservation.room.name }}</td>
+            <td>{{reservation.nrPeople}}</td>
+            <td>{{reservation.createDate| date:"MM/dd/yyyy 'at' h:mma" }}</td>
+            <td>{{reservation.checkInDate| date:"MM/dd/yyyy"}}
+              <!-- <button *ngIf="room.reservations.length>0" type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="ellipsis-h"></fa></button> -->
+            </td>
+            <td>{{reservation.checkOutDate| date:"MM/dd/yyyy"}}</td>
+            <td>{{getDays(reservation.checkOutDate, reservation.checkInDate)}}
+              <!-- -reservation.checkInDate.getDate()}} -->
+            </td>
+            <td>{{reservation.totalPrice}} MDL</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>

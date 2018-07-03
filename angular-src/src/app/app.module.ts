@@ -12,7 +12,7 @@ import { LoggedOutGuard } from './guards/loggedOut.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {Ng2GoogleChartsModule} from 'ng2-google-charts';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
@@ -24,8 +24,10 @@ import { ReservationService } from './services/reservation.service';
 import { RoomService } from './services/room.service';
 import { VillaService } from './services/villa.service';
 
- import {SearchByUsernamePipe} from './pipes/searchByUsername.pipe';
-import {SortPipe} from './pipes/sort.pipe';
+import { SearchByDate } from './pipes/searchByDate.pipe';
+import { SearchByNamePipe } from './pipes/searchByName.pipe';
+import { SearchByUsernamePipe } from './pipes/searchByUsername.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
 import { ActivitiesComponent } from './components/activities/activities.component';
@@ -43,6 +45,7 @@ import { RoomsComponent } from './components/rooms/rooms.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { UsersComponent } from './components/users/users.component';
+import { ReservationsComponent } from './components/reservations/reservations.component';
 
 
 
@@ -65,6 +68,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
+    SearchByDate ,
+    SearchByNamePipe,
     SearchByUsernamePipe,
     SortPipe,
     AboutComponent,
@@ -83,7 +88,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     NotfoundComponent,
     BookingComponent,
-    UsersComponent
+    UsersComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,

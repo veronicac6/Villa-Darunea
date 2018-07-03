@@ -4,11 +4,12 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: "searchByUsername"
 })
 export class SearchByUsernamePipe implements PipeTransform {
-  transform(users: any[], searchText: string, value: string): any {
-    if(searchText==null){
+  transform(users: any[], searchText: string): any {
+    if (searchText == null) {
       return users;
     }
-    return users.filter(function(user){
-      return user.value.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+    return users.filter(function(user) {
+      return user.username.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+    });
   }
 }

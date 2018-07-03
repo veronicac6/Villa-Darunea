@@ -119,7 +119,7 @@ router.get('/show', (request, response) => {
       response.send(docs);
   }).populate({
     path: 'user',
-    select: 'email contactNumber'
+    select: 'username email'
   }).populate('room', 'name').exec();
 });
 //----------------------------------------------
@@ -137,7 +137,7 @@ router.get('/show/:id', (request, response) => {
       response.send(doc);
   }).populate({
     path: 'user',
-    select: 'email contactNumber'
+    select: 'username email'
   }).populate('room', 'name').exec();
 });
 //----------------------------------------------
