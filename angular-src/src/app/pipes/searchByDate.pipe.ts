@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: "searchByDate"
 })
 
-export class SearchByDate implements PipeTransform {
+export class SearchByDatePipe implements PipeTransform {
   transform(array: any[], searchCheckIn: string, searchCheckOut:string): any {
     if (searchCheckIn == null || searchCheckOut==null || searchCheckIn == "" || searchCheckOut=="") {
       return array;

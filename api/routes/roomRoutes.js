@@ -73,10 +73,6 @@ router.get('/show', (request, response) => {
       populate: {
         path: 'user',
         select: ' username email contactNumber-_id'
-      },
-      populate:{
-        path:'room',
-        select:'name'
       }
     }).exec((err, docs) => {
       if (err) {

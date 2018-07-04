@@ -1,88 +1,107 @@
-
-<div class="container py-5">
-  <form class="availForm center" id="change_dates" action="checkAvailability()" method="get">
-
-		<div class="search_wrapper search_wrapper_dates">
-			<div class="search_dates_arrival">
-				<label id="label-checkin">Check-in</label>
-				<div class="input_wrapper">
-					<input class="search_input uninitialized date-pick" type="date" value="{{currDate}}" data-value="{{currDate| date:'yyyy-MM-dd'}}" name="checkin" aria-labelledby="label-checkin"/>
-					<span class="icon search_calendar-icon"></span>
-				</div>
-			</div>
-
-            <div class="search_dates_departure">
-                <label id="label-checkout">Check-out</label>
-                <div class="input_wrapper">
-                    <input class="search_input uninitialized date-pick" value="2018-07-01" data-value="2018-07-01" name="checkout" aria-labellby="label-checkout"/>
-                    <span class="icon search_calendar-icon"></span>
-                </div>
+<div class="container py-2">
+  <div class="col-md-12 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header" style="background-color:#390056">
+        <h5 class="text-center" style="color:white;">Check Availability</h5>
+      </div>
+      <div class="card-body">
+        <form class="center" id="change_dates" #availabilityForm="ngForm" (ngSubmit)="checkAvailability(availabilityForm)">
+          <div class="row text-center">
+            <div class="col">
+              <label>Check-in</label>
+              <div class="input_wrapper">
+                <input class="form-control" type="date" data-value="{{currDate| date:'yyyy-MM-dd'}}" name="checkIn" ngModel required/>
+                <span class="icon search_calendar-icon"></span>
+              </div>
             </div>
-        </div>
-
-		<div class="search_wrapper guests">
-			<label for="adults">Guests</label>
-			<div class="tm-select search_select adults">
-				<select name="adults" class="tm-select_dropdown">
-
-						<option selected value="1">
-							1 adult
-						</option>
-
-						<option  value="2">
-							2 adults
-						</option>
-
-						<option  value="3">
-							3 adults
-						</option>
-
-						<option  value="4">
-							4 adults
-						</option>
-
-						<option  value="5">
-							5 adults
-						</option>
-
-						<option  value="6">
-							6 adults
-						</option>
-
-				</select>
-			</div>
-
-
-
-			<label for="children" class="invisible_spoken">Guests</label>
-				<div class="tm-select search_select children">
-					<select name="children" class="tm-select_dropdown">
-
-							<option selected value="0">
-								0 children
-							</option>
-
-							<option  value="1">
-								1 child
-							</option>
-
-							<option  value="2">
-								2 children
-							</option>
-
-					</select>
-				</div>
-		</div>
-        <div class="search_wrapper button">
-    <input type="hidden" name="h" value="bhvzmwak"/>
-            <input search-button class="btn search-btn" type="submit" value="Check availability" />
-        </div>
-    </form>
+            <div class="col">
+              <label id="label-checkout">Check-out</label>
+              <div>
+                <input type="date" class="form-control" data-value="{{nextDayDate| date:'yyyy-MM-dd'}}" name="checkOut" ngModel required />
+                <span class="icon search_calendar-icon"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col">
+              <label>Room</label>
+              <div class="selectContainer">
+                <select class="form-control" ng-list name="room" ngModel required room #room="ngModel" required (change)="setNewRoom(room.value)">
+                <option  value="" disabled selected>Choose room</option>
+                <ng-container *ngFor="let room of rooms">
+                  <option [value]="room._id">"{{room.name}}" with the capacity of {{room.capacity}} people and the price of {{room.price}} lei/person</option>
+                </ng-container>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label>Guests</label>
+              <select name="adults" ngModel class="form-control" required>
+                <option selected value="1">
+                  1 adult
+                </option>
+                <ng-container *ngIf="room.touched && room.valid">
+                  <option  *ngFor="let n of range(2,curRoom.capacity)" [value]="n">
+                    {{n}} adults
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col" style="padding-top:25px;">
+              <button class="btn btn-success" type="submit">Check availability</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="container py-5">
+<div class="container py-2" *ngIf="availableRooms">
+
+  <div class="col-md-12 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header" style="background-color:#0E894C">
+        <h5 style="color:white;">{{curRoom.name}}</h5>
+      </div>
+      <div class="card-body" *ngIf="inAvailableRooms(curRoom)">
+        <div class="row">
+          <div class="col-md-4 mx-auto"><img src="http://via.placeholder.com/200x100" style="width:200px" alt="Room picture"></div>
+          <div class="col-md-8 mx-auto"><a>{{curRoom.name}}</a></div>
+        </div>
+        <!-- <p>Room is available</p> -->
+
+      </div>
+
+      <div class="card-body" *ngIf="!inAvailableRooms(curRoom)">
+        <!-- <ng-container *ngFor="let room of availableRooms| searchById:room.value"> -->
+        <a class="text-muted">This room is booked for these dates</a>
+        <!-- </ng-container> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header" style="background-color:#0E894C">
+        <h5 style="color:white;">All rooms available these dates</h5>
+      </div>
+      <div class="card-body">
+        <ul>
+          <ng-container *ngFor="let room of availableRooms">
+            <li>Room: {{room.name}}</li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-2">
   <h2 class="text-center text-black mb-4">Book a room</h2>
   <div class="row">
-    <div class="col-md-8 mx-auto">
+    <div class="col-md-12 mx-auto">
       <div class="card rounded-0">
 
         <div class="card-header">
@@ -145,13 +164,13 @@
               <!-- </ng-container> -->
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="col-xs-3">Total price</label>
               <input readonly="readonly" type="text" class="form-control" value="{{price*nrDays*myForm.value.nrPeople}}" name="totalPrice" ngModel>
-            </div>
+            </div> -->
 
             <div class="form-group">
-              <button id="btnSubmit" class="btn btn-success btn-lg btn-block" type="submit" ><b>Book</b></button>
+              <button id="btnSubmit" class="btn btn-success btn-lg btn-block" type="submit"><b>Book</b></button>
             </div>
 
 

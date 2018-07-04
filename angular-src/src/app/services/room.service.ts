@@ -20,5 +20,4 @@ export class RoomService {
       .map(res => res.json());
   }
 
-
 }

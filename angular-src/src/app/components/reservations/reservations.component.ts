@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationService } from '../../services/reservation.service';
-import { SearchByDate } from '../../pipes/searchByDate.pipe';
+import { SearchByDatePipe } from '../../pipes/searchByDate.pipe';
 import 'rxjs/Rx';
 @Component({
   selector: 'app-reservations',

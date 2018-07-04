@@ -24,7 +24,8 @@ import { ReservationService } from './services/reservation.service';
 import { RoomService } from './services/room.service';
 import { VillaService } from './services/villa.service';
 
-import { SearchByDate } from './pipes/searchByDate.pipe';
+import { SearchByIdPipe} from './pipes/searchById.pipe';
+import { SearchByDatePipe } from './pipes/searchByDate.pipe';
 import { SearchByNamePipe } from './pipes/searchByName.pipe';
 import { SearchByUsernamePipe } from './pipes/searchByUsername.pipe';
 import { SortPipe } from './pipes/sort.pipe';
@@ -68,7 +69,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    SearchByDate ,
+    SearchByIdPipe,
+    SearchByDatePipe,
     SearchByNamePipe,
     SearchByUsernamePipe,
     SortPipe,
