@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ActivatedRoute } from '@angular/router';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedOutGuard } from './guards/loggedOut.guard';
@@ -54,6 +54,7 @@ import { ReservationsComponent } from './components/reservations/reservations.co
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'booking', component: BookingComponent, canActivate: [AuthGuard] },
+  // { path: 'booking/:checkIn', component: BookingComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard] },
   { path: 'gallery', component: GalleryComponent },
   { path: 'home', component: HomeComponent },

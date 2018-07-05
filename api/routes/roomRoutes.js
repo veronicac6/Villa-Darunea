@@ -15,7 +15,8 @@ router.post('/new', function(req, res) {
     capacity: req.body.capacity,
     villa: req.body.villa,
     price: req.body.price,
-    reservations: req.body.reservations
+    reservations: req.body.reservations,
+    path:req.body.path
   });
 
   let responseSchema = {

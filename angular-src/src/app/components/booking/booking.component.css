@@ -23,3 +23,8 @@ input.ng-invalid.ng-touched
 {
    border-color: red;
 }
+
+.center{
+  margin: auto;
+  text-align: center;
+}

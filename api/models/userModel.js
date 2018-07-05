@@ -27,6 +27,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     requiered: true
   },
+  country:{
+    type: String,
+    requiered:true
+  },
   contactNumber: {
     type: String,
     requiered: true
@@ -39,6 +43,11 @@ const UserSchema = mongoose.Schema({
     type: Number,
     enum: [0, 1],//0-client; 1-admin
     default: 0,
+    requiered:true
+  },
+  sex:{
+    type:String,
+    enum:['F','M'],
     requiered:true
   }
 });

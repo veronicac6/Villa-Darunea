@@ -20,12 +20,14 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) { }
 
-  name: string;
-  surname: string;
-  username: string;
-  email: string;
-  password: string;
-  contactNumber: string;
+  // name: string;
+  // surname: string;
+  // username: string;
+  // email: string;
+  // password: string;
+  // contactNumber: string;
+  // country: string;
+  // sex: string;
 
   ngOnInit() { }
 
@@ -37,7 +39,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegisterSubmit(myForm: NgForm) {
-    if (myForm.valid) {
+    if (myForm.valid && myForm.value.password == myForm.value.confirmPassword) {
 
       const user = {
         name: myForm.value.name,
@@ -45,7 +47,9 @@ export class RegisterComponent implements OnInit {
         username: myForm.value.username,
         email: myForm.value.email,
         password: myForm.value.password,
-        contactNumber: myForm.value.contactNumber
+        contactNumber: myForm.value.contactNumber,
+        sex: myForm.value.sex,
+        country: myForm.value.country
       };
 
       //Register user
@@ -60,7 +64,7 @@ export class RegisterComponent implements OnInit {
       });
 
     } else {
-      this.flashMessage.show('Please fill in all fields', { cssClass: 'alert-danger', timeout: 3000 });
+      this.flashMessage.show('Please fill in all fields correctly', { cssClass: 'alert-danger', timeout: 3000 });
     }
   }
 }

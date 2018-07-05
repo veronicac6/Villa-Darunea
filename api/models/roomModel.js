@@ -29,7 +29,11 @@ const RoomSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Reservation',
     requiered: true
-  }]
+  }],
+  path:{
+    type:String,
+    requiered:true
+  }
 });
 
 module.exports =mongoose.model('Room', RoomSchema);

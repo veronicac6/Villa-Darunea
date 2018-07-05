@@ -26,12 +26,12 @@
           <td>{{room.villa.name}}</td>
           <td>{{ room.price }}</td>
           <td *ngIf="room.reservations[0]">{{ room.reservations.length}}
-            <button *ngIf="room.reservations.length>0" type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="ellipsis-h"></fa></button>
+            <button *ngIf="room.reservations.length>0" type="checkbox" class="btn btn-warning" (click)="showReservations(rooms.indexOf(room))"><fa name="ellipsis-h"></fa></button>
           </td>
           <td *ngIf="!room.reservations || room.reservations[0]==null">-</td>
         </tr>
-
-        <tr *ngIf="checked && room.reservations[0]">
+<!-- DETAILS  __________________________________________________________________________________________-->
+        <tr *ngIf="showDetails[rooms.indexOf(room)] && room.reservations[0]">
           <td colspan="8">
             <table *ngFor="let reservation of room.reservations" class="col-xl-6 col-lg-6 col-md-10 col-6">
               <tr>

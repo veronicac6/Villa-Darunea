@@ -16,7 +16,9 @@ router.post('/register', function(req, res, next) {
     username: req.body.username,
     password: req.body.password, // plain text password
     // reservations: req.body.reservations,
-    role: req.body.role
+    role: req.body.role,
+    sex:req.body.sex,
+    country:req.body.country
   });
   // console.log(newUser);
   //Add user in the database

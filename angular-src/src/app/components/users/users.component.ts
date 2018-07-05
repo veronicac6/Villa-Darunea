@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Validators, FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import 'rxjs/Rx';
-import {AuthService} from '../../services/auth.service';
-import {SearchByUsernamePipe} from '../../pipes/searchByUsername.pipe';
+import { AuthService } from '../../services/auth.service';
+import { SearchByUsernamePipe } from '../../pipes/searchByUsername.pipe';
 
 @Component({
   selector: 'app-users',
@@ -14,36 +14,36 @@ import {SearchByUsernamePipe} from '../../pipes/searchByUsername.pipe';
 })
 
 export class UsersComponent implements OnInit {
-  users=[];
-  // reservations: any[];
+  users = [];
   date = new Date();
-  checked = false;
+  show = false;
+  showDetails:boolean[]=[];
+  // showDetails:boolean[]=[];
+  // reservations: any[];
   // selectedReservation = "";
 
   constructor(
-    // private clientService: ClientService,
     private flashMessage: FlashMessagesService,
     private formBuilder: FormBuilder,
     private router: Router,
-    // private reservationService: ReservationService,
     private authService: AuthService) { }
 
   ngOnInit() {
-
     this.authService.getUsers().subscribe(
       data => {
         this.users = data;
+        for ( var i = 0; i < this.users.length; i++) {
+        this.showDetails.push(false);}
+        // console.log(this.showDetails);
       }, //onNext-receive HTTP response
       err => { console.error(err); return false; } //onError-if returns an error code
     );
+  }
 
-    // this.reservationService.getReservations().subscribe(
-    //   data => {
-    //     this.reservations = data;
-    //   }, //onNext-receive HTTP response
-    //   err => { console.error(err); return false; } //onError-if returns an error code
-    // );
+  editUser() { }
 
+  showReservations(index) {
+    this.showDetails[index]=!this.showDetails[index];
   }
 
   // showClients() {
@@ -54,38 +54,7 @@ export class UsersComponent implements OnInit {
   //     err => { console.error(err); return false; } //onError-if returns an error code
   //   );
   // }
-  editUser() { }
-  showReservations(){
-         this.checked = !this.checked;
-  //   return   '<table *ngIf="checked">'+
-  //       '<thead>'+
-  //       '  <tr>'+
-  //         '  <th>Nr.</th>'+
-  //       '    <th>User</th>'+
-  //         '  <th>Room</th>'+
-  //       '    <th>Nr.people</th>'+
-  //     '      <th>Created</th>'+
-  //         '  <th>Check-in</th>'+
-  //       '    <th>Check-out</th>'+
-  //   '        <th>Total Price</th>'+
-  //       '  </tr>'+
-  //   '    </thead>'+
-  //     '  <tbody>'+
-  //       '  <tr *ngFor="let reservation of user.reservations">'+
-  //     '      <td>users.reservations.indexOf(reservation)+1</td>'+
-  //         '  <td>reservation.user</td>'+
-  //         '  <td>reservation.room</td>'+
-  //     '      <td>reservation.nrPeople</td>'+
-  //           '<td>reservation.createDate</td>'+
-  //       '    <td>reservation.checkInDate</td>'+
-  //       '    <td>reservation.checkOutDate</td>'+
-  //         '  <td>reservation.totalPrice</td>'+
-  //         '</tr>'+
-  //   '    </tbody>'+
-  // '    </table>';
 
-
-  }
 
   // deleteClient(clientId) {
   //   this.clientService.deleteClient(clientId).subscribe(data => {

@@ -18,7 +18,6 @@ router.post('/new', (req, res) => {
     user: req.body.user,
     room: req.body.room,
     nrPeople: req.body.nrPeople,
-    createDate: req.body.createDate,
     checkInDate: req.body.checkInDate,
     checkOutDate: req.body.checkOutDate,
     totalPrice: req.body.totalPrice
@@ -59,8 +58,10 @@ router.post('/new', (req, res) => {
         });
       } else {
         console.log("Room is available these dates");
+        console.log(newReservation);
         newReservation.save(function(err, doc) {
           if (err) {
+            console.log(err.errmsg);
             res.json({
               success: false,
               msg: 'Failed to save booking'
@@ -105,6 +106,7 @@ router.post('/new', (req, res) => {
       }
     }
   }).populate('reservations', 'checkInDate checkOutDate -_id').exec();
+
 });
 
 //----------------------------------------------

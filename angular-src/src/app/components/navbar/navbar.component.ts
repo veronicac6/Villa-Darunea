@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   adminRole: any;
+  userLoggedIn = JSON.parse(localStorage.getItem('user'));
   // adminVal = false;
   // user: Object;
   // console.log(user);
@@ -36,6 +37,7 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // console.log(this.userLoggedIn.id);
     // this.authService.getProfile().subscribe(
     //   profile => {
     //     this.user = profile.user;

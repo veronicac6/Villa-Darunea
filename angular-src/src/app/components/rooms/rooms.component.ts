@@ -15,6 +15,7 @@ export class RoomsComponent implements OnInit {
 
   rooms=[];
   checked = false;
+  showDetails:boolean[]=[];
 
   ngOnInit() {
     this.roomService.getRooms().subscribe(
@@ -22,6 +23,8 @@ export class RoomsComponent implements OnInit {
         var i = 0;
         for (i = 0; i < data.length; i++) {
           this.rooms.push(data[i]);
+          for ( var i = 0; i < this.rooms.length; i++) {
+          this.showDetails.push(false);}
         }
       },
       err => { console.error(err); return false }
@@ -29,8 +32,8 @@ export class RoomsComponent implements OnInit {
     // console.log(this.rooms);
   }
 
-  showReservations() {
-    this.checked = !this.checked;
+  showReservations(index) {
+    this.showDetails[index] = !this.showDetails[index];
     // console.log(this.checked);
   }
 }

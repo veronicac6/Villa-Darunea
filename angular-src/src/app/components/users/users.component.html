@@ -99,7 +99,7 @@
 
           <td *ngIf="user.reservations[0]">
             {{user.reservations.length}}
-            <button type="checkbox" class="btn btn-warning" (click)="showReservations()"><fa name="ellipsis-h"></fa></button>
+            <button type="checkbox" class="btn btn-warning" (click)="showReservations(users.indexOf(user))"><fa name="ellipsis-h"></fa></button>
           </td>
           <td *ngIf="!user.reservations || user.reservations[0]==null">-</td>
 
@@ -108,8 +108,8 @@
             <!-- <button class="btn btn-danger" (click)="deleteClient(client._id)">Delete</button> -->
           </td>
         </tr>
-
-        <tr *ngIf="checked && user.reservations[0]">
+        <!-- Reservations DETAILS______________________________________________________________________________________________  -->
+        <tr *ngIf="showDetails[users.indexOf(user)]">
           <td colspan="8">
             <table *ngFor="let reservation of user.reservations" class="col-xl-6 col-lg-6 col-md-10 col-6">
               <tr>
@@ -148,12 +148,12 @@
                 <th>Total Price:</th>
                 <td>{{reservation.totalPrice}} MDL</td>
               </tr>
-
             </table>
             <br>
           </td>
         </tr>
 
+        <!--  ______________________________________________-->
       </ng-container>
     </tbody>
   </table>

@@ -1,4 +1,4 @@
-//import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
 import { RoomService } from '../../services/room.service';
@@ -21,49 +21,108 @@ export class BookingComponent implements OnInit {
     private roomService: RoomService,
     private clientService: ClientService,
     private flashMessage: FlashMessagesService,
-    private reservationService: ReservationService
-  ) { }
+    private reservationService: ReservationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    // this.route.params.subscribe(params => console.log(params););
+  }
 
   rooms: any[];
   availableRooms: any[];
   currDate = new Date();
-  nextDayDate = new Date();
+  nextDayDate = this.addDays(this.currDate, 1);
   curRoom: any;
   freeRoom = true;
+  nrDays: any;
+  showForm = false;
+  showFormCurRoom = false;
+  newReservation = {
+    user: JSON.parse(localStorage.getItem('user')).id,
+    room: "",
+    nrPeople: 0,
+    checkInDate: new Date(),
+    checkOutDate: new Date(),
+    totalPrice: 0,
+    createDate: new Date()
+  };
+  // one=1;
+  // CheckOut: any this.addDays(this.CheckIn,1);
   // roomCapacity = 2;
   // btnDisable: boolean = false;
-  // nrDays: any;
   // room: any;
   // capacity: number;
   // price: any;
-  // CheckIn: any = new Date();
-  // CheckOut: any = new Date();
   // stayTooShort: boolean = false;
 
   ngOnInit() {
     this.GetRooms();
-    this.nextDayDate.setDate(this.nextDayDate.getDate() + 1);
+    // console.log(this.newReservation);
+  }
+
+  book(room) {
+    this.newReservation.room = room._id;
+    this.newReservation.totalPrice = this.newReservation.nrPeople * room.price * this.nrDays;
+    // console.log(this.newReservation);
+    this.reservationService.postReservation(this.newReservation).subscribe(data => {
+      // console.log(data);
+      if (data.success) {
+        this.flashMessage.show("Reservation was succesful",
+          {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
+        this.router.navigate(['profile']);
+        // console.log("Reservation added");
+        // console.log(newReservation);
+      } else {
+        this.flashMessage.show("Error occured, try again",
+          {
+            cssClass: 'alert-danger',
+            timeout: 5000
+          });
+      }
+    });
+  }
+
+  addDays(date, days) {
+    var val = new Date(date);
+    val.setDate(val.getDate() + days);
+    // console.log(val);
+    // console.log( typeof val);
+    return val;
   }
 
   checkAvailability(availabilityForm: NgForm) {
     if (availabilityForm.valid) {
-      // this.GetRooms();
-      this.availableRooms = this.rooms.filter(function(room) {
-        var freeRoom = true;
-        room.reservations.forEach(function(reservation) {
-          var reservCheckIn = new Date(reservation.checkInDate).getTime();
-          var reservCheckOut = new Date(reservation.checkOutDate).getTime();
-          var newReservCheckIn = new Date(availabilityForm.value.checkIn).getTime();
-          var newReservCheckOut = new Date(availabilityForm.value.checkOut).getTime();
-          if (
-            newReservCheckIn >= reservCheckIn && newReservCheckIn <= reservCheckOut ||
-            newReservCheckOut >= reservCheckIn && newReservCheckOut <= reservCheckOut
-          ) freeRoom = false;
+      if (availabilityForm.value.checkIn < availabilityForm.value.checkOut) {
+        this.nrDays = new Date(availabilityForm.value.checkOut).getDate() - new Date(availabilityForm.value.checkIn).getDate();
+        this.availableRooms = this.rooms.filter(function(room) {
+          var freeRoom = true;
+          room.reservations.forEach(function(reservation) {
+            var reservCheckIn = new Date(reservation.checkInDate).getTime();
+            var reservCheckOut = new Date(reservation.checkOutDate).getTime();
+            var newReservCheckIn = new Date(availabilityForm.value.checkIn).getTime();
+            var newReservCheckOut = new Date(availabilityForm.value.checkOut).getTime();
+            if (
+              newReservCheckIn >= reservCheckIn && newReservCheckIn <= reservCheckOut ||
+              newReservCheckOut >= reservCheckIn && newReservCheckOut <= reservCheckOut
+            ) freeRoom = false;
+          });
+          return freeRoom;
+        }
+        // console.log(this.availableRooms);
+      );
+      } else this.flashMessage.show("Wrong dates!",
+        {
+          cssClass: 'alert-danger',
+          timeout: 5000
         });
-        return freeRoom;
-      });
+      this.newReservation.checkInDate =new Date(availabilityForm.value.checkIn);
+      this.newReservation.checkOutDate =new Date(availabilityForm.value.checkOut);
+      this.newReservation.nrPeople = parseInt(availabilityForm.value.adults);
+      // console.log(this.newReservation);
     }
-
     else
       this.flashMessage.show("Fill all the fields!",
         {
@@ -82,11 +141,7 @@ export class BookingComponent implements OnInit {
     this.availableRooms = null;
   }
 
-
-
-
   // room = GetRoom(myForm.value.room);
-
 
   range(min, max) {
     var input = [];
@@ -96,6 +151,13 @@ export class BookingComponent implements OnInit {
     return input;
   };
 
+  nextDay(value) {
+    var date = new Date(value);
+    date.setDate(date.getDate() + 1);
+    console.log(date);
+    return date;
+    // value.setDate(value.getDate() + 1);
+  }
 
   GetRooms() {
     this.roomService.getRooms().subscribe(
@@ -115,6 +177,23 @@ export class BookingComponent implements OnInit {
     );
   }
 
+  // getCheckIn(availabilityForm: NgForm) {
+  //   {
+  //     var CheckIn: any = new Date();
+  //     const date = new Date(availabilityForm.value.checkIn);
+  //     CheckIn.setDate(date.getDate() + 1);
+  //     console.log(CheckIn);
+  //     return CheckIn;
+  //     document.getElementById("checkOutInput").min = CheckIn.;
+  //   }
+  // }
+
+  // getCheckOut(availabilityForm: NgForm) {
+  //   {
+  //     this.CheckOut = new Date(availabilityForm.value.checkOut);
+  //   }
+  // }
+
   // getRoomCapacity(id){
   // if (this.GetRoom(id)){
   //   this.roomCapacity=this.room.capacity;
@@ -130,27 +209,6 @@ export class BookingComponent implements OnInit {
   //     // console.log(this.capacity);
   //   },
   //     err => { console.error(err); return false });
-  // }
-
-  // getCheckIn(myForm: NgForm) {
-  //   {
-  //     this.CheckIn = new Date(myForm.value.checkIn);
-  //     // this.CheckIn.setDate(this.CheckIn.getDate()+1);
-  //     // console.log(this.CheckIn);
-  //     // console.log(this.CheckIn);
-  //   }
-  // }
-
-  // getCheckOut(myForm: NgForm) {
-  //   {
-  //     this.CheckOut = new Date(myForm.value.checkOut);
-  //     this.nrDays = new Date(this.CheckOut).getDate() - new Date(this.CheckIn).getDate()
-  //     // console.log(this.CheckOut);
-  //     // if (this.CheckOut == this.CheckIn) {
-  //     //   this.stayTooShort = false;
-  //     // } else this.stayTooShort = true;
-  //     // console.log(this.stayTooShort);
-  //   }
   // }
 
   // save(myForm: NgForm) { }

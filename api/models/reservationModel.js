@@ -22,12 +22,10 @@ const ReservationSchema = mongoose.Schema({
   },
   createDate: {
     type: Date,
-    default: Date.now,
-    requiered: true
+    default: Date.now
   },
   checkInDate: {
     type: Date,
-    default: Date.now,
     requiered: true
   },
   checkOutDate: {
