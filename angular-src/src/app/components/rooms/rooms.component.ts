@@ -20,12 +20,13 @@ export class RoomsComponent implements OnInit {
   ngOnInit() {
     this.roomService.getRooms().subscribe(
       data => {
-        var i = 0;
-        for (i = 0; i < data.length; i++) {
-          this.rooms.push(data[i]);
+        this.rooms=data;
+        // console.log(this.rooms);
+        // var i = 0;
+        // for (i = 0; i < data.length; i++) {
+        //   this.rooms.push(data[i]);
           for ( var i = 0; i < this.rooms.length; i++) {
           this.showDetails.push(false);}
-        }
       },
       err => { console.error(err); return false }
     );

@@ -10,21 +10,29 @@
   margin-right: 3px;
 }
 
-#btnSubmit{
-  margin-top:20px;
-  border-radius:0;
+#btnSubmit {
+  margin-top: 20px;
+  border-radius: 0;
 }
 
-.btn-link{
-  padding-left:0;
+.btn-link {
+  padding-left: 0;
 }
 
-input.ng-invalid.ng-touched
-{
-   border-color: red;
+input.ng-invalid.ng-touched {
+  border-color: red;
 }
 
-.center{
+.center {
   margin: auto;
   text-align: center;
+}
+
+.purple-gradient {
+  /* background-image: linear-gradient(to top, #d1fdeb, #d6fefe, #e6fdff, #f7fdff, #ffffff); */
+  background-color: #FCF7FF;
+}
+
+.white-font {
+  color: white;
 }

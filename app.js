@@ -15,6 +15,7 @@ const users = require('./api/routes/userRoutes');
 const rooms = require('./api/routes/roomRoutes');
 const reservations = require('./api/routes/reservationRoutes');
 const villas = require('./api/routes/villaRoutes');
+const httpRequests = require('./api/routes/httpRequestsRoutes');
 // const clienti=require('./api/routes/clientiRoutes');
 
 // Port number
@@ -35,6 +36,7 @@ app.use('/users', users);
 app.use('/rooms', rooms);
 app.use('/reservations', reservations);
 app.use('/villas', villas);
+app.use('/httpRequests', httpRequests);
 // app.use('/clienti',clienti);
 
 // Set Static Angular output folder

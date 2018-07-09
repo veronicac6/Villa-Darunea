@@ -32,7 +32,7 @@
               <a class="nav-link" [routerLink]="['/about']">ABOUT</a>
             </li> -->
 
-            <li *ngIf="!authService.loggedIn()" class="nav-item " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <li  class="nav-item " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
               <a class="nav-link" [routerLink]="['/gallery']">GALLERY</a>
             </li>
 
@@ -40,9 +40,7 @@
               <a class="nav-link" [routerLink]="['/contact']">CONTACT</a>
             </li> -->
 
-            <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-              <a class="nav-link" [routerLink]="['/booking']">BOOK</a>
-            </li>
+
 
             <!-- <li class="nav-item dropdown" style="clear:both" >
               <a class="nav-link dropdown-toggle" data-toggle='dropdown' href="" id="languages">LANGUAGE<span class="caret"></span></a>
@@ -59,7 +57,10 @@
             <li *ngIf="authService.loggedIn()" class="nav-item">
               <a class="nav-link" [routerLink]="['/profile']">PROFILE</a>
             </li>
-            <!-- BUG -DASHBOARD does not have animation  -->
+            <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+              <a class="nav-link" [routerLink]="['/booking']">BOOK</a>
+            </li>
+
             <li *ngIf="authService.loggedIn() && authService.isAdmin()" class="nav-item">
               <!-- <a>{{authService.getProfile()}}</a> -->
               <a class="nav-link" [routerLink]="['/dashboard']">DASHBOARD</a>

@@ -14,8 +14,10 @@ import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { LightboxModule } from 'ngx-lightbox';
 
 
+import { HttpRequestsService } from './services/http-requests.service';
 import { UserService } from './services/user.service';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
@@ -95,6 +97,7 @@ const appRoutes: Routes = [
     ReservationsComponent
   ],
   imports: [
+    LightboxModule,
     BrowserModule,
     FormsModule,
     NgbModule.forRoot(),
@@ -109,7 +112,7 @@ const appRoutes: Routes = [
     Ng2GoogleChartsModule,
     AngularFontAwesomeModule
   ],
-  providers: [UserService, VillaService, RoomService, ValidateService, AuthService, AuthGuard, LoggedOutGuard, AdminGuard, ClientService, ReservationService],
+  providers: [UserService, VillaService,HttpRequestsService, RoomService, ValidateService, AuthService, AuthGuard, LoggedOutGuard, AdminGuard, ClientService, ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

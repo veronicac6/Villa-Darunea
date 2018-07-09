@@ -21,7 +21,8 @@ const UserSchema = mongoose.Schema({
   },
   username: {
     type: String,
-    requiered: true
+    requiered: true,
+    unique: [true, 'A user with this email address already exists, please use another one.']
   },
   password: {
     type: String,
@@ -48,6 +49,11 @@ const UserSchema = mongoose.Schema({
   sex:{
     type:String,
     enum:['F','M'],
+    requiered:true
+  },
+  createDate:{
+    type:Date,
+    default: Date.now,
     requiered:true
   }
 });

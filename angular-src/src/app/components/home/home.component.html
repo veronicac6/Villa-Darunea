@@ -1,8 +1,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="container">
+<div class=" container-fluid col-10" >
   <div class="main w3-light-white">
 
     <!-- Header- carousel -->
@@ -11,25 +10,25 @@
 
         <div class="carousel-item active">
           <img class="d-block w-100" src="../assets/images/villa2_1.jpg" alt="First slide">
-          <div class="carousel-caption d-none d-md-block">
-            <h5 style="font-size: 40">Lorem ipsum dolor</h5>
-            <p style="font-size: 20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel cursus lectus. Sed non consequat ex. Quisque maximus vestibulum mauris.</p>
+          <div class="carousel-caption d-none d-md-block ">
+            <h2 style=" font-size: 3vw;" class="text-shadow">Discover Moldova,</h2>
+            <h3 style=" font-size: 2vw;" class="text-shadow">the hidden treasure of Europe</h3>
           </div>
         </div>
 
         <div class="carousel-item">
           <img class="d-block w-100" src="../assets/images/camera4.jpg" alt="Second slide">
-          <div class="carousel-caption d-none d-md-block">
-            <h5 style="font-size: 40">Lorem ipsum dolor</h5>
-            <p style="font-size: 20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel cursus lectus. Sed non consequat ex. Quisque maximus vestibulum mauris.</p>
+          <div class="carousel-caption d-none d-md-block" >
+            <h5 style="font-size: 3vw;" class="text-shadow">Rural environement</h5>
+            <h6 style="font-size: 2vw;" class="text-shadow">is the best way to escape from a busy city life</h6>
           </div>
         </div>
 
         <div class="carousel-item">
           <img class="d-block w-100" src="../assets/images/workshop_food.jpg" alt="Third slide">
           <div class="carousel-caption d-none d-md-block">
-            <h5 style="font-size: 40">Lorem ipsum dolor</h5>
-            <p style="font-size: 20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel cursus lectus. Sed non consequat ex. Quisque maximus vestibulum mauris.</p>
+            <h5 style="font-size: 3vw" class="text-shadow">Gastronomical workshops</h5>
+            <p style="font-size: 2vw" class="text-shadow">The mix of Romanian, Ukrainian and Russian cuisine is what makes the traditional food special. Take classes from local people and discover new flavours!</p>
           </div>
         </div>
 
@@ -53,20 +52,26 @@
 
       <!-- <div class="w3-content" style="max-width:fit-content;"> -->
 
-      <div class="w3-row w3-padding-16">
+      <div class="w3-row w3-padding-16" >
+        <ng-container *ngFor="let room of rooms">
+          <div class="w3-quarter w3-margin-bottom" id="camera1">
 
-        <div class="w3-quarter w3-margin-bottom" id="camera1">
-          <img src="../../../assets/images/camera1_1.JPG" alt="camera1" style="width:100%">
-          <div class="w3-container w3-light-grey">
-            <h3>Room 1</h3>
-            <h6 class="w3-opacity">€10/person</h6>
-            <p>Three double beds</p>
-            <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i></p>
-            <button (click)='onClickBook()' class="w3-button w3-block w3-black w3-margin-bottom">Book</button>
+            <img *ngIf="room.path" src="{{room.path}}" style="width:100%" alt="Room picture">
+            <img *ngIf="!room.path" src="http://via.placeholder.com/200x100" style="width:100%" alt="Room picture">
+
+            <!-- <img src="../../../assets/images/camera1_1.JPG" alt="camera1" style="width:100%"> -->
+            <div class="w3-container w3-light-grey">
+              <h3>{{room.name}}</h3>
+              <h6 class="w3-opacity">{{room.price}} MDL</h6>
+              <p>Double beds x {{room.capacity/2}}</p>
+              <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i><i class="fa fa-glass"></i> <i class="fa fa-cutlery"></i></p>
+              <button (click)='onClickBook()' class="w3-button w3-block w3-black w3-margin-bottom">Book</button>
+            </div>
           </div>
-        </div>
+        </ng-container>
 
-        <div class="w3-quarter w3-margin-bottom" id="camera2">
+
+        <!-- <div class="w3-quarter w3-margin-bottom" id="camera2">
           <img src="../../../assets/images/camera2_1.jpg" alt="camera2" style="width:100%">
           <div class="w3-container w3-light-grey">
             <h3>Room 2</h3>
@@ -83,7 +88,7 @@
             <h3>Room 3</h3>
             <h6 class="w3-opacity">€20/person</h6>
             <p>King-size bed</p>
-            <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i> <i class="fa fa-tv"></i> <i class="fa fa-glass"></i> <i class="fa fa-cutlery"></i></p>
+            <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i> <i class="fa fa-tv"></i> </p>
             <button (click)='onClickBook()' class="w3-button w3-block w3-black w3-margin-bottom">Book</button>
           </div>
         </div>
@@ -97,7 +102,7 @@
             <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i> <i class="fa fa-tv"></i> <i class="fa fa-glass"></i> <i class="fa fa-cutlery"></i></p>
             <button (click)='onClickBook()' class="w3-button w3-block w3-black w3-margin-bottom">Book</button>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
@@ -105,7 +110,7 @@
       <div class="jumbotron w3-light-grey">
         <h2 class="display-5">About</h2>
         <p class="lead"> The resort is the right choice for visitors who are searching for a combination of charm, peace and quiet, and a convenient position. It is a small, comfortable resort.
-          The staff offer an attentive, personalized service and are always available to offer any help to guests. The hotel is arranged on three floors, without a lift. On the ground floor, apart from the reception, there is a
+          The staff offer an attentive, personalized service and are always available to offer any help to guests. Two guest houses are arranged on the ground floor. Apart from the reception, there is a
           comfortable lounge where you can sit and drink tea, or just read. There is also a splendid terrace, where, you can relax and immerge yourself from morning onwards in the good atmosphere, travelling about by
           water and people gathering together and filling the alleyways and little squares with their chatter.</p>
         <hr class="my-4">
@@ -115,18 +120,22 @@
 
       <!-- MAP -->
       <div class="w3-container" id="contact">
-        <h2>Contact</h2>
+        <h2>Contacts</h2>
 
         <!-- ADDRESS -->
         <div class="w3-row w3-large w3-center" style="margin:32px 0">
-          <div class="w3-third"><i class="fa fa-map-marker w3-text-red"></i> 423 Some adr, Chicago, US</div>
-          <div class="w3-third"><i class="fa fa-phone w3-text-red"></i> Phone: +00 151515</div>
-          <div class="w3-third"><i class="fa fa-envelope w3-text-red"></i> Email: mail@mail.com</div>
+          <div class="w3-third"><i class="fa fa-map-marker w3-text-red"></i> 2 Academicianul Gh.Ghidirim Street, 4227 Palanca, Republic of Moldova </div>
+          <div class="w3-third"><i class="fa fa-phone w3-text-red"></i> Phone: +37360244429</div>
+          <div class="w3-third"><i class="fa fa-envelope w3-text-red"></i> Email: villadarunea@gmail.com</div>
         </div>
 
         <agm-map [latitude]="latitude" [longitude]="longitude">
           <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
         </agm-map>
+
+        <div class="col" style="text-align:center; padding: 15px;">
+          <p>For more information about Palanca, check the official webpage of the local counsil, <a href="http://palanca.sat.md/">here.</a></p>
+        </div>
 
       </div>
       <!-- MAP -->

@@ -1,4 +1,38 @@
-<h1>Gallery works</h1>
+<div class="container gallery-container" style="padding:40px 0px 40px 0px">
+
+  <h1 class="text-center">Gallery</h1>
+
+  <p class="page-description text-center">
+    <button class="btn btn-link" (click)="filter('all')">All</button>
+    <button class="btn btn-link" (click)="filter('rooms')">Rooms</button>
+    <button class="btn btn-link" (click)="filter('outdoors')">Outdoors</button>
+  </p>
+
+  <div class="gallery">
+
+    <div class="row">
+      <ng-container *ngFor="let image of filterAlbum; let i=index">
+        <div class="col-sm-6 col-md-4" style="padding-top:10px;" >
+          <img src="{{image.src}}" class="img-fluid img-thumbnail" (click)="open(i)" />
+        </div>
+      </ng-container>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- <h1>Gallery works</h1> -->
+
+<!-- <div id="lightgallery">
+    <a href="img/img1.jpg">
+        <img src="http://via.placeholder.com/350x150">
+    </a>
+    <a href="img/img2.jpg">
+        <img src="http://via.placeholder.com/350x150">
+    </a>
+</div> -->
 
 <!--
 <meta charset="UTF-8">
@@ -18,8 +52,8 @@ div,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <!-- !PAGE CONTENT! -->
 <!-- <div class="w3-main" style="margin-left:300px"> -->
 
-  <!-- Header -->
-  <!-- <header id="resort">
+<!-- Header -->
+<!-- <header id="resort">
     <a href="#"><img src="http://via.placeholder.com/350x150" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
@@ -28,7 +62,7 @@ div,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   </header>
 
    First Photo Grid-->
-  <!-- <div class="w3-row-padding">
+<!-- <div class="w3-row-padding">
     <div class="w3-third w3-container w3-margin-bottom">
       <img src="../assets/images/thumb1.jpg" alt="" style="width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white">
@@ -52,8 +86,8 @@ div,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     </div>
   </div> -->
 
-  <!-- Second Photo Grid-->
-  <!-- <div class="w3-row-padding">
+<!-- Second Photo Grid-->
+<!-- <div class="w3-row-padding">
     <div class="w3-third w3-container w3-margin-bottom">
       <img src="http://via.placeholder.com/350x150" alt="" style="width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white">
@@ -77,8 +111,8 @@ div,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     </div>
   </div>  -->
 
-  <!-- Pagination -->
-  <!-- <div class="w3-center w3-padding-32">
+<!-- Pagination -->
+<!-- <div class="w3-center w3-padding-32">
     <div class="w3-bar">
       <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
       <a href="#" class="w3-bar-item w3-black w3-button">1</a>

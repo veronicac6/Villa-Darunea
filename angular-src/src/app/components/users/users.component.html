@@ -82,7 +82,7 @@
         <th scope="col">Username</th>
         <th scope="col">Contact number</th>
         <th scope="col">Reservations</th>
-        <th scope="col"></th>
+        <!-- <th scope="col"></th> -->
       </tr>
     </thead>
     <tbody>
@@ -103,10 +103,10 @@
           </td>
           <td *ngIf="!user.reservations || user.reservations[0]==null">-</td>
 
-          <td>
+          <!-- <td>
             <button class="btn btn-success" disabled (click)="editUser()">Edit</button>
-            <!-- <button class="btn btn-danger" (click)="deleteClient(client._id)">Delete</button> -->
-          </td>
+            <button class="btn btn-danger" (click)="deleteClient(client._id)">Delete</button>
+          </td> -->
         </tr>
         <!-- Reservations DETAILS______________________________________________________________________________________________  -->
         <tr *ngIf="showDetails[users.indexOf(user)]">

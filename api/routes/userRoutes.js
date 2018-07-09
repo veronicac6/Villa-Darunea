@@ -5,6 +5,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../controllers/userController'); // bring in the controller
 const UserSchema = require('../models/userModel');
+const HttpRequestsSchema = require('../models/httpRequestsModel');
 
 //http://localhost:3000/users/register
 router.post('/register', function(req, res, next) {
@@ -17,8 +18,8 @@ router.post('/register', function(req, res, next) {
     password: req.body.password, // plain text password
     // reservations: req.body.reservations,
     role: req.body.role,
-    sex:req.body.sex,
-    country:req.body.country
+    sex: req.body.sex,
+    country: req.body.country
   });
   // console.log(newUser);
   //Add user in the database
@@ -27,7 +28,7 @@ router.post('/register', function(req, res, next) {
       if (err.name === 'BulkWriteError' && err.code === 11000) {
         res.json({
           success: false,
-          msg: 'This email address is already used, please another one'
+          msg: 'This email address or username is already used, please another one'
         });
         // console.log(err.errmsg)
       } else res.json({
@@ -40,6 +41,21 @@ router.post('/register', function(req, res, next) {
         msg: 'User registered'
       });
     }
+  });
+
+  HttpRequestsSchema.update({
+    _id: '5b41e48f541620633004f5ee'
+  }, {
+    $inc: {
+      'requests': 1
+    }
+  }, (err, doc) => {
+    if (err) {
+      console.log('/update/:id | PUT | Error was occurred');
+      console.log(err.errmsg);
+      res.send(err.errmsg);
+    } else
+      console.log("HttpAdress 5b41e48f541620633004f5ee was successfully incremented!");
   });
 });
 
@@ -84,6 +100,21 @@ router.post('/authenticate', function(req, res, next) {
     });
     //end comparePassword
   });
+
+  HttpRequestsSchema.update({
+    _id: '5b41e419541620633004f5ed'
+  }, {
+    $inc: {
+      'requests': 1
+    }
+  }, (err, doc) => {
+    if (err) {
+      console.log('/update/:id | PUT | Error was occurred');
+      console.log(err.errmsg);
+      res.send(err.errmsg);
+    } else
+      console.log("HttpAdress 5b41e419541620633004f5ed was successfully incremented!");
+  });
   //end getUserByUsername
 });
 //end /authenticate
@@ -109,7 +140,57 @@ router.get('/show', (req, res) => {
     }
     if (docs)
       res.send(docs);
-  }).populate({path:'reservations', populate:{path:'room', select:'name'}});
+  }).populate({
+    path: 'reservations',
+    populate: {
+      path: 'room',
+      select: 'name path'
+    }
+  });
+});
+
+//------------------------------------------------
+// http://localhost:3000/users/show/:id
+router.get('/show/:id', (req, res) => {
+  let id = req.params.id;
+  UserSchema.findOne({
+      _id: id
+    }, (err, docs) => {
+      if (err) {
+        console.log('/show/:id | GET | Error was occurred');
+        res.send(err.errmsg);
+      }
+      if (docs)
+        res.send(docs);
+    })
+    .populate({
+      path: 'reservations',
+      populate: {
+        path: 'room',
+        select: 'name path price'
+      }
+    });
+});
+
+
+//-----------------------------------------------------
+// http://localhost:3000/users/update/:id
+router.put('/update/:id', (req, res) => {
+  let id = req.params.id;
+  let userData = req.body;
+  // console.log(userData);
+  UserSchema.update({
+    _id: id
+  }, userData, (err) => {
+    if (err) {
+      console.log('/update/:id | PUT | Error was occurred');
+      console.log(err.errmsg);
+      res.send(err.errmsg);
+    } else
+      res.json({
+        msg: "User " + id + " successfully updated!"
+      });
+  });
 });
 
 module.exports = router;

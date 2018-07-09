@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ReservationService } from '../../services/reservation.service';
+import { HttpRequestsService } from '../../services/http-requests.service';
 import { SearchByIdPipe } from '../../pipes/searchById.pipe';
 
 @Component({
@@ -16,17 +17,15 @@ import { SearchByIdPipe } from '../../pipes/searchById.pipe';
 
 export class BookingComponent implements OnInit {
 
-
   constructor(
     private roomService: RoomService,
     private clientService: ClientService,
     private flashMessage: FlashMessagesService,
     private reservationService: ReservationService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
-    // this.route.params.subscribe(params => console.log(params););
-  }
+    private router: Router,
+    private httpRequestsService: HttpRequestsService
+  ) { }
 
   rooms: any[];
   availableRooms: any[];
@@ -37,6 +36,7 @@ export class BookingComponent implements OnInit {
   nrDays: any;
   showForm = false;
   showFormCurRoom = false;
+
   newReservation = {
     user: JSON.parse(localStorage.getItem('user')).id,
     room: "",
@@ -57,46 +57,24 @@ export class BookingComponent implements OnInit {
 
   ngOnInit() {
     this.GetRooms();
-    // console.log(this.newReservation);
   }
 
-  book(room) {
-    this.newReservation.room = room._id;
-    this.newReservation.totalPrice = this.newReservation.nrPeople * room.price * this.nrDays;
-    // console.log(this.newReservation);
-    this.reservationService.postReservation(this.newReservation).subscribe(data => {
-      // console.log(data);
-      if (data.success) {
-        this.flashMessage.show("Reservation was succesful",
-          {
-            cssClass: 'alert-success',
-            timeout: 5000
-          });
-        this.router.navigate(['profile']);
-        // console.log("Reservation added");
-        // console.log(newReservation);
-      } else {
-        this.flashMessage.show("Error occured, try again",
-          {
-            cssClass: 'alert-danger',
-            timeout: 5000
-          });
-      }
-    });
-  }
-
-  addDays(date, days) {
-    var val = new Date(date);
-    val.setDate(val.getDate() + days);
-    // console.log(val);
-    // console.log( typeof val);
-    return val;
+  GetRooms() {
+    this.roomService.getRooms().subscribe(
+      data => {
+        this.rooms = data;
+      },
+      err => { console.error(err); return false }
+    );
   }
 
   checkAvailability(availabilityForm: NgForm) {
     if (availabilityForm.valid) {
       if (availabilityForm.value.checkIn < availabilityForm.value.checkOut) {
-        this.nrDays = new Date(availabilityForm.value.checkOut).getDate() - new Date(availabilityForm.value.checkIn).getDate();
+        var date1 = new Date(availabilityForm.value.checkOut).getTime();
+        var date2 = new Date(availabilityForm.value.checkIn).getTime();
+        this.nrDays = Math.round((date1 - date2) / 1000 / 60 / 60 / 24);
+
         this.availableRooms = this.rooms.filter(function(room) {
           var freeRoom = true;
           room.reservations.forEach(function(reservation) {
@@ -110,26 +88,60 @@ export class BookingComponent implements OnInit {
             ) freeRoom = false;
           });
           return freeRoom;
-        }
-        // console.log(this.availableRooms);
-      );
+        });
+
+        this.newReservation.checkInDate = new Date(availabilityForm.value.checkIn);
+        this.newReservation.checkOutDate = new Date(availabilityForm.value.checkOut);
+        this.newReservation.nrPeople = parseInt(availabilityForm.value.adults);
+
       } else this.flashMessage.show("Wrong dates!",
         {
           cssClass: 'alert-danger',
           timeout: 5000
         });
-      this.newReservation.checkInDate =new Date(availabilityForm.value.checkIn);
-      this.newReservation.checkOutDate =new Date(availabilityForm.value.checkOut);
-      this.newReservation.nrPeople = parseInt(availabilityForm.value.adults);
-      // console.log(this.newReservation);
     }
     else
-      this.flashMessage.show("Fill all the fields!",
+      this.flashMessage.show("Fill in all the fields",
         {
           cssClass: 'alert-danger',
           timeout: 5000
         });
   }
+
+  book(room, htmlElement) {
+    this.newReservation.room = room._id;
+    this.newReservation.totalPrice = this.newReservation.nrPeople * room.price * this.nrDays;
+
+    this.reservationService.postReservation(this.newReservation).subscribe(data => {
+      if (data.success) {
+          // document.getElementById('bookModal').click();
+        this.flashMessage.show("Reservation was successfully created",
+          {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
+          this.router.navigate(['/profile']);
+      } else {
+        this.flashMessage.show("Error occured, try again",
+          {
+            cssClass: 'alert-danger',
+            timeout: 5000
+          });
+      }
+      document.getElementById(htmlElement).click();
+    });
+    // this.httpRequestsService.incrementHttpRequests('5b41e4e8541620633004f5f1').subscribe(data=>console.log(data););
+  }
+
+  addDays(date, days) {
+    var val = new Date(date);
+    val.setDate(val.getDate() + days);
+    // console.log(val);
+    // console.log( typeof val);
+    return val;
+  }
+
+
 
   inAvailableRooms(object) {
     return this.availableRooms.indexOf(object) > -1;
@@ -137,11 +149,8 @@ export class BookingComponent implements OnInit {
 
   setNewRoom(id) {
     this.curRoom = this.rooms.filter(room => room._id == id)[0];
-    // console.log(this.curRoom);
     this.availableRooms = null;
   }
-
-  // room = GetRoom(myForm.value.room);
 
   range(min, max) {
     var input = [];
@@ -156,16 +165,6 @@ export class BookingComponent implements OnInit {
     date.setDate(date.getDate() + 1);
     console.log(date);
     return date;
-    // value.setDate(value.getDate() + 1);
-  }
-
-  GetRooms() {
-    this.roomService.getRooms().subscribe(
-      data => {
-        this.rooms = data;
-      },
-      err => { console.error(err); return false }
-    );
   }
 
   GetRoom(id) {

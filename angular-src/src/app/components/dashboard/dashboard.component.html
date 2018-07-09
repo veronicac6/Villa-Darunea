@@ -3,11 +3,11 @@
 
   <div class="btn-group" role="group">
     <button class="btn btn-secondary" type="checkbox" name="options" checked (click)="setRadio('Charts')">Charts</button>
-    <button type="button" class="btn btn-secondary" name="options" (click)="setRadio('Lists')">Lists</button>
+    <button type="checkbox" class="btn btn-secondary" name="options" (click)="setRadio('Lists')">Lists</button>
   </div>
 
 </div>
-<div class="main-panel">
+<div class="main-panel" *ngIf="reservations && users">
   <div id="accordion" *ngIf="isSelected('Lists')">
     <div class="card">
       <div class="card-header" id="headingOne">
@@ -66,8 +66,9 @@
                 <div class="media">
                   <div class="media-body white text-left">
                     <!-- BUG -->
-                    <h3 class="font-large-1 mb-0">0</h3>
-                    <span>Number of Visitors</span>
+                    <h4 class="font-large-1 mb-0">{{nowDate | date :'fullDate'}}</h4>
+                    <h5 class="font-large-1 mb-0">{{nowDate | date :'shortTime'}}</h5>
+                    <!-- <span>Number of Visitors</span> -->
                     <!-- BUG end -->
                   </div>
 
@@ -84,8 +85,9 @@
               <div class="card-block pt-2 pb-0">
                 <div class="media">
                   <div class="media-body white text-left">
-                    <h3 class="font-large-1 mb-0">0</h3>
-                    <span>Number of Users</span>
+                    <h3 class="font-large-1 mb-0">{{nrUsers}}</h3>
+                    <span><small>Number of users registered this month</small></span>
+                    <input class="form-control" style="background-color:#15CC71;color:white;" type="month" name="month" min="2018-05" [ngModel]="curDate" month #month="ngModel" ngModel (change)="countUsersPerMonth(month.value)" />
                   </div>
                 </div>
               </div>
@@ -99,8 +101,9 @@
               <div class="card-block pt-2 pb-0">
                 <div class="media">
                   <div class="media-body white text-left">
-                    <h3 class="font-large-1 mb-0">0</h3>
-                    <span>Number of Reservetations</span>
+                    <h3 class="font-large-1 mb-0">{{nrReservations}}</h3>
+                    <span><small>Number of reservetations were created this month</small></span>
+                    <input class="form-control" style="background-color:#1AFF8D;color:white;" type="month" name="month2" min="2018-05" [ngModel]="curDate" month2 #month2="ngModel" ngModel (change)="countReservationsPerMonth(month2.value)" />
                   </div>
                 </div>
               </div>
@@ -114,8 +117,9 @@
               <div class="card-block pt-2 pb-0">
                 <div class="media">
                   <div class="media-body white text-left">
-                    <h3 class="font-large-1 mb-0">0</h3>
-                    <span>Estimated Total Earning</span>
+                    <h3 class="font-large-1 mb-0">{{earnings}} MDL</h3>
+                    <span><small>Estimated total earning on reservations</small></span>
+                    <input class="form-control" style="background-color:#337F5A;color:white;" type="month" name="month3" min="2018-05" [ngModel]="curDate" month3 #month3="ngModel" ngModel (change)="countEarnings(month3.value)" />
                   </div>
                 </div>
               </div>
@@ -130,11 +134,20 @@
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Visitors Chart</h4>
+              <h4 class="card-title">Reservations Chart</h4>
             </div>
             <div class="card-body">
               <div class="card-block">
-                <google-chart [data]="pieChartData"></google-chart>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-secondary" type="checkbox" name="options" checked (click)="setRadioChart('Week')">Week</button>
+                  <button type="checkbox" class="btn btn-secondary" name="options" (click)="setRadioChart('Month')">Month</button>
+                </div>
+
+                <google-chart *ngIf="selectedLinkChart=='Week'" [data]="reservationsChartWeek"></google-chart>
+                <google-chart *ngIf="selectedLinkChart=='Month'" [data]="reservationsChartMonth"></google-chart>
+
+
+
               </div>
             </div>
           </div>
@@ -147,12 +160,12 @@
         <div class="col-xl-4 col-lg-12 col-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Statistics</h4>
+              <h4 class="card-title">Gender chart</h4>
             </div>
             <div class="card-body">
-              <p class="font-medium-2 text-muted text-center pb-2">Last 6 Months Reservations</p>
-              <div id="Stack-bar-chart" class="height-300 Stackbarchart mb-2">
-                <google-chart [data]="columnChartData"></google-chart>
+              <!-- <p class="font-medium-2 text-muted text-center pb-2">Last 6 Months Reservations</p> -->
+              <div id="Stack-bar-chart" class="height-450 Stackbarchart mb-2">
+                <google-chart [data]="genderChartData"></google-chart>
               </div>
             </div>
           </div>
@@ -161,77 +174,25 @@
         <div class="col-xl-8 col-lg-12 col-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Rooms</h4>
+              <h4 class="card-title">Top 5 countries</h4>
             </div>
             <div class="card-body">
               <table class="table table-responsive-sm text-center">
                 <thead>
-                  <!-- <tr>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                    <th>Delete</th>
-                  </tr> -->
+                  <tr>
+                    <th>Country</th>
+                    <th>Number of users</th>
+                    <th>Percentage Share</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <!-- <tr>
-                    <td><img class="media-object round-media height-50" src="app-assets/img/elements/01.png" alt="Generic placeholder image" /></td>
-                    <td>Ferrero Rocher</td>
-                    <td>1</td>
-                    <td>
-                      <a class="btn white btn-round btn-primary">Active</a>
-                    </td>
-                    <td>$19.94</td>
-                    <td>
-                      <a class="danger" data-original-title="" title="">
-                 <i class="ft-x"></i>
-               </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img class="media-object round-media height-50" src="app-assets/img/elements/07.png" alt="Generic placeholder image" /></td>
-                    <td>Headphones</td>
-                    <td>2</td>
-                    <td>
-                      <a class="btn white btn-round btn-danger">Disabled</a>
-                    </td>
-                    <td>$99.00</td>
-                    <td>
-                      <a class="danger" data-original-title="" title="">
-                 <i class="ft-x"></i>
-               </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img class="media-object round-media height-50" src="app-assets/img/elements/11.png" alt="Generic placeholder image" /></td>
-                    <td>Camera</td>
-                    <td>1</td>
-                    <td>
-                      <a class="btn white btn-round btn-info">Paused</a>
-                    </td>
-                    <td>$299.00</td>
-                    <td>
-                      <a class="danger" data-original-title="" title="">
-                 <i class="ft-x"></i>
-               </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img class="media-object round-media height-50" src="app-assets/img/elements/14.png" alt="Generic placeholder image" /></td>
-                    <td>Beer</td>
-                    <td>2</td>
-                    <td>
-                      <a class="btn white btn-round btn-success">Active</a>
-                    </td>
-                    <td>$24.51</td>
-                    <td>
-                      <a class="danger" data-original-title="" title="">
-                 <i class="ft-x"></i>
-               </a>
-                    </td>
-                  </tr> -->
+                  <ng-container *ngFor="let country of topCountries">
+                    <tr>
+                      <td>{{country[0]}}</td>
+                      <td>{{country[1]}}</td>
+                      <td>{{country[1]/sumFunction(chartArray)*100 | number:'1.0-0'}}%</td>
+                    </tr>
+                  </ng-container>
                 </tbody>
               </table>
             </div>
@@ -243,30 +204,35 @@
         <div class="col-xl-8 col-lg-12 col-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title mb-0">Countries</h4>
+              <h4 class="card-title mb-0">Countries map</h4>
             </div>
             <div class="card-body">
-              <google-chart [data]="geoChartData"></google-chart>
+              <div id="MapChart" >
+                <google-chart [data]="geoChartData"></google-chart>
+              </div>
             </div>
           </div>
         </div>
         <div class="col-xl-4 col-lg-12 col-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title mb-0">Statistics</h4>
+              <h4 class="card-title mb-0">API requests</h4>
             </div>
             <div class="card-body">
-              <div class="card-block">
-                <div class="p-2 text-center">
-                  <a class=" btn  font-medium-1">Month</a>
-                  <a class="btn btn-raised btn-round bg-white mx-3 px-3">Week</a>
-                  <a class=" btn  font-medium-1">Day</a>
-                </div>
-                <div class="my-3 text-center white">
-                  <!-- <a class="font-large-2 d-block mb-1">$ 78.89 <span class="ft-arrow-up font-large-2"></span></a>
-                  <span class="font-medium-1">Week2   +15.44</span> -->
-                </div>
-              </div>
+              <table class="table table-responsive-sm text-center">
+                <thead>
+                  <th>Path</th>
+                  <th>Number</th>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let httpRequest of httpRequests">
+                    <tr>
+                      <td>{{httpRequest.address}}</td>
+                      <td>{{httpRequest.requests}}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
               <div id="lineChart" class="height-250 lineChart lineChartShadow">
               </div>
             </div>
@@ -280,27 +246,3 @@
 <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="background-color:#E6E6E6;" *ngIf="isSelected('Lists')">
 
 </div>
-
-
-<!-- <div class="row">
-  <div class="col-md-5">
-    <h2>Contacts</h2>
-    <ul class="list-group">
-      <li class="list-group-item"
-        *ngFor="let client of clienti"
-        (click)="selectClient(client)"
-        [class.active]="client === selectedClient">
-        {{contact.name}}
-      </li>
-    </ul>
-    <button class="btn btn-warning" (click)="createNewClient()">New</button>
-  </div>
-  <div class="col-md-5 col-md-offset-2">
-    <div
-      [client]="selectedClient"
-      [createHandler]="addClient"
-      [updateHandler]="updateClient"
-      [deleteHandler]="deleteClient">
-    </div>
-  </div>
-</div> -->

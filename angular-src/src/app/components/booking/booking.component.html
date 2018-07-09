@@ -2,19 +2,19 @@
   <div class="col-md-12 mx-auto">
     <div class="card rounded-0">
       <div class="card-header" style="background-color:#390056">
-        <h5 class="text-center" style="color:white;">Check Availability</h5>
+        <h5 class="text-center white-font" >Check Availability</h5>
       </div>
-      <div class="card-body">
+      <div class="card-body purple-gradient">
         <form class="center" id="change_dates" #availabilityForm="ngForm" (ngSubmit)="checkAvailability(availabilityForm)">
           <div class="row text-center">
             <div class="col">
-              <label>Check-in</label>
+              <label >Check-in</label>
               <div class="input_wrapper">
                 <input class="form-control" type="date" min="{{currDate | date:'yyyy-MM-dd'}}" name="checkIn" checkIn #checkIn="ngModel" ngModel required />
               </div>
             </div>
             <div class="col">
-              <label id="label-checkout">Check-out</label>
+              <label >Check-out</label>
               <div>
                 <input id="checkOutInput" class="form-control" type="date" min="{{checkIn.value| date:'yyyy-MM-dd'}}" name="checkOut" ngModel checkOut #checkOut="ngModel" required/>
                 <!-- <input  id="checkOutInput" class="form-control" type="date" min="{{checkIn.value| date:'yyyy-MM-dd'}}" name="checkOut" ngModel checkOut #checkOut="ngModel" required/> -->
@@ -25,18 +25,18 @@
           </div>
           <div class="row text-center">
             <div class="col">
-              <label>Room</label>
+              <label >Room</label>
               <div class="selectContainer">
                 <select class="form-control" ng-list name="room" ngModel required room #room="ngModel" required (change)="setNewRoom(room.value)">
                 <option  value="" disabled hidden selected>Choose room</option>
                 <ng-container *ngFor="let room of rooms">
-                  <option [value]="room._id">"{{room.name}}" with the capacity of {{room.capacity}} people and the price of {{room.price}} lei/person</option>
+                  <option [value]="room._id">{{room.name}} (capacity- {{room.capacity}} people, price- {{room.price}} MDL/person)</option>
                 </ng-container>
                 </select>
               </div>
             </div>
             <div class="col">
-              <label>Guests</label>
+              <label >Guests</label>
               <div class="selectContainer">
                 <select name="adults" ng-list adults #adults="ngModel" value="1" ngModel class="form-control" required>
                 <option value="" selected hidden disable >Choose number</option>
@@ -98,7 +98,28 @@
           <div class="center text-center col mx-auto">
             <h5>Total Price: </h5>
             <h6>{{adults.value*curRoom.price*nrDays}} MDL</h6>
-            <button type="button" class="btn btn-danger" (click)="book(curRoom)">BOOK NOW</button>
+            <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#bookModalMain">BOOK NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="bookModalMain" tabindex="-1" role="dialog" aria-labelledby="bookModalMainLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="bookModalMainLabel">Book now</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="No">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to book this room?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" (click)="book(curRoom, 'bookModalMain')">Yes</button>
+            </div>
           </div>
         </div>
       </div>
@@ -155,17 +176,38 @@
   </div> -->
 
   <!--  All ROOMS_______________________________________________________________________-->
-  <div class="col-md-12 mx-auto" >
+  <div class="col-md-12 mx-auto">
     <div class="card rounded-0">
       <div class="card-header" style="background-color:#0E894C">
         <h5 style="color:white;">All rooms available these dates</h5>
       </div>
       <div class="card-body" *ngIf='availableRooms[0]==null'>
-            <a class="text-muted">All the rooms are booked for these dates</a>
+        <a class="text-muted">All the rooms are booked for these dates</a>
       </div>
       <div class="card-body" *ngIf='availableRooms[0]!==null' style="padding-top:0px;padding-bottom:0px;">
         <ng-container *ngFor="let room of availableRooms">
           <div class="row " style=" border: 1px solid rgba(0, 0, 0, 0.125); padding:15px; margin-left:-20px; margin-right:-20px;">
+
+            <!-- Modal -->
+            <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel">Book now</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="No">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to book this room?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" (click)="book(room, 'bookModal')">Yes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="col mx-auto ">
               <img *ngIf="room.path" src="{{room.path}}" style="width:200px" alt="Room picture">
@@ -196,8 +238,9 @@
             <div class="center text-center col mx-auto">
               <h5>Total Price: </h5>
               <h6>{{adults.value*room.price*nrDays}} MDL</h6>
-              <button type="button" class="btn btn-danger" (click)="book(room)">BOOK NOW</button>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#bookModal">BOOK NOW</button>
             </div>
+
           </div>
         </ng-container>
 

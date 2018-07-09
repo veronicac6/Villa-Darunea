@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { RoomService } from '../../services/room.service';
+import { AuthService } from '../../services/auth.service';
+
 
 
 @Component({
@@ -13,12 +16,34 @@ export class HomeComponent {
   longitude = 30.080824;
   constructor(
     private router: Router,
-    private flashMessage: FlashMessagesService) {
-
+    private flashMessage: FlashMessagesService,
+    private roomService: RoomService,
+    private authService: AuthService) {
   }
+
+  rooms: any[];
+
+  getRooms() {
+    this.roomService.getRooms().subscribe(
+      data => {
+        var rooms = data;
+        return rooms;
+      },
+      err => { console.error(err); return false; }
+    );
+  }
+
   ngOnInit() {
-
+    // console.log(this.rooms);
+    this.roomService.getRooms().subscribe(
+      data => {
+        this.rooms = data;
+        // console.log(this.rooms);
+      },
+      err => { console.error(err); return false; }
+    );
   }
+
   onClickBook() {
     // if (){
     //   this.flashMessage.show('You need to log in in order to book a room',
@@ -27,26 +52,16 @@ export class HomeComponent {
     //       timeout: 5000
     //     });
     // } else
-    this.router.navigate(['login']);
-    this.flashMessage.show('You need to log in or register in order to book a room',
-      {
-        cssClass: 'alert-danger ',
-        timeout: 5000
-      });
-// this.flashMessage.grayOut(true);
+    if (!this.authService.loggedIn()) {
+      this.router.navigate(['/login']);
+      this.flashMessage.show('You need to log in or register in order to book a room',
+        {
+          cssClass: 'alert-danger ',
+          timeout: 5000
+        });
+      } else
+        this.router.navigate(['/booking']);
+    // this.flashMessage.grayOut(true);
   }
 
-
-  //   function initMap() {
-  //     const uluru : {lat: -25.363, lng: 131.044};
-  //     const map = new google.maps.Map(document.getElementById('map'), {
-  //       zoom: 4,
-  //       center: uluru
-  //     });
-  //     const marker = new google.maps.Marker({
-  //       position: uluru,
-  //       map: map
-  //     });
-  //     console.log("worked");
-  //   }
 }

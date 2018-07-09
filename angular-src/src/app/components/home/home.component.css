@@ -27,18 +27,18 @@ agm-map {
   background-color: grey;
 }
 #camera1{
-  padding-right: 10;
+  padding: 5;
 }
 
-#camera2,#camera3{
-  padding:0 5 0 5 ;
-}
 
-#camera4{
-  padding-left: 10 ;
-}
 
 .w3-quarter img{
   width: 250px;
   height: 150px;
+}
+/* .padding-150 !important{
+  padding-bottom: 150px;
+} */
+.text-shadow{
+text-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
 }

@@ -6,6 +6,7 @@ const config = require('../../config/database');
 const ReservationSchema = require('../models/reservationModel');
 const RoomSchema = require('../models/roomModel');
 const UserSchema = require('../models/userModel');
+const HttpRequestsSchema = require('../models/httpRequestsModel');
 // const ClientSchema = require('../models/clientModel');
 
 
@@ -57,8 +58,8 @@ router.post('/new', (req, res) => {
           msg: 'Room is not available these dates'
         });
       } else {
-        console.log("Room is available these dates");
-        console.log(newReservation);
+        // console.log("Room is available these dates");
+        // console.log(newReservation);
         newReservation.save(function(err, doc) {
           if (err) {
             console.log(err.errmsg);
@@ -77,7 +78,7 @@ router.post('/new', (req, res) => {
               }
             }, (err, doc) => {
               if (err) {
-                console.log('Pushing reservation in RoomSchema.reservations Error was occurred');
+                // console.log('Pushing reservation in RoomSchema.reservations Error was occurred');
                 res.send(err.errmsg);
               } else
                 console.log("Reservation " + newReservation._id + " was pushed to Roomchema.reservations!");
@@ -92,11 +93,28 @@ router.post('/new', (req, res) => {
               }
             }, (err, doc) => {
               if (err) {
-                console.log('Pushing reservation in UserSchema.reservations Error was occurred');
+                // console.log('Pushing reservation in UserSchema.reservations Error was occurred');
                 res.send(err.errmsg);
               } else
                 console.log("Reservation " + newReservation._id + " was pushed to UserSchema.reservations!");
             });
+
+            // ----incrementing httpRequests
+            HttpRequestsSchema.update({
+              _id: '5b41e4e8541620633004f5f1'
+            }, {
+              $inc: {
+                'requests': 1
+              }
+            }, (err, doc) => {
+              if (err) {
+                console.log('/update/:id | PUT | Error was occurred');
+                console.log(err.errmsg);
+                res.send(err.errmsg);
+              } else
+                console.log("HttpAdress 5b41e4e8541620633004f5f1 was successfully incremented!");
+            });
+
             res.json({
               success: true,
               msg: 'Reservation ' + newReservation._id + ' was done successfully'
@@ -219,6 +237,22 @@ router.delete('/delete/:id', (request, response) => {
 
         } else
           console.log("Reservation " + id + " deleted from ClientSchema!");
+      });
+
+      // ----incrementing httpRequests
+      HttpRequestsSchema.update({
+        _id: '5b41e4f3541620633004f5f2'
+      }, {
+        $inc: {
+          'requests': 1
+        }
+      }, (err, doc) => {
+        if (err) {
+          console.log('/update/:id | PUT | Error was occurred');
+          console.log(err.errmsg);
+          res.send(err.errmsg);
+        } else
+          console.log("HttpAdress 5b41e4f3541620633004f5f2 was successfully incremented!");
       });
     }
   });

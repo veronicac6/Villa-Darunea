@@ -35,3 +35,13 @@
 .left-align {
   text-align: left;
 }
+
+.padding{
+  padding-top:40px;
+}
+
+
+input.ng-invalid.ng-touched
+{
+   border-color: red;
+}

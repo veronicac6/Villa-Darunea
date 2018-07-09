@@ -29,11 +29,25 @@ export class AuthService {
   }
   // ----------------------------------------
   getProfile() {
-    let headers = new Headers();
     this.loadToken();
+    let headers = new Headers();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     return this.http.get('http://localhost:3000/users/profile', { headers: headers })
+      .map(res => res.json());
+  }
+
+  getUser(id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/show/' + id, { headers: headers })
+      .map(res => res.json());
+  }
+  //----------------------------------------
+  updateProfile(data) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/update/' + data._id, data, { headers: headers })
       .map(res => res.json());
   }
   // ----------------------------------------
@@ -73,10 +87,10 @@ export class AuthService {
   }
 
   //............................................
-  getUsers(){
-  let headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-  return this.http.get('http://localhost:3000/users/show', { headers: headers })
-    .map(res => res.json());
-}
+  getUsers() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/users/show', { headers: headers })
+      .map(res => res.json());
+  }
 }
