@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
   geoChartData = {
     chartType: 'GeoChart',
     dataTable: [
-      ['Country', 'Popularity']
+      ['Country', 'Users']
       // ['Germany', 200],
       // ['United States', 300],
       // ['Brazil', 400],
